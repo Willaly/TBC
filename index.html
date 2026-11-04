@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Maquette de relecture : retirer la ligne robots au lancement public -->
+<meta name="robots" content="noindex, nofollow">
+<title>Trail Base Camp</title>
+<link rel="icon" type="image/png" href="media/logo.png">
+<meta name="description" content="Stages de pilotage tout-terrain pour trails et maxi-trails, sur ta propre moto, à Vert-Saint-Denis (77), à 40 km de Paris.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: roadbook de rallye. Pages en bandes pleine largeur ; le programme est une feuille de roadbook (cases numérotées, tulipes). */
+:root {
+  --bg: #eeede5;
+  --surface: #f8f7f1;
+  --ink: #171c15;
+  --muted: #555c50;
+  --line: #cbcbbd;
+  --forest: #1f3324;
+  --forest-2: #2b4430;
+  --on-forest: #eef0e6;
+  --on-forest-muted: #b9c2ad;
+  --orange: #d9661a;
+  --orange-strong: #b9530f;
+  --on-orange: #1a1208;
+  --sand: #d8b98a;
+  --ok: #3f7a3a;
+  --full: #9a3b22;
+  --f-display: "Big Shoulders Display", "Big Shoulders", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --f-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step--1: 0.84rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(2.2rem, 4.5vw, 3.4rem);
+  --step-4: clamp(3rem, 8.5vw, 6.6rem);
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10150f; --surface: #182017; --ink: #ecebe2; --muted: #a6ad9a; --line: #2f392c;
+    --forest: #1b2b1d; --forest-2: #24382a; --on-forest: #eef0e6; --on-forest-muted: #aab49e;
+    --orange: #ee8a3d; --orange-strong: #f39b55; --on-orange: #1a1208; --sand: #c7a573;
+    --ok: #7cbf6f; --full: #e07a5c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10150f; --surface: #182017; --ink: #ecebe2; --muted: #a6ad9a; --line: #2f392c;
+  --forest: #1b2b1d; --forest-2: #24382a; --on-forest: #eef0e6; --on-forest-muted: #aab49e;
+  --orange: #ee8a3d; --orange-strong: #f39b55; --on-orange: #1a1208; --sand: #c7a573;
+  --ok: #7cbf6f; --full: #e07a5c; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: var(--step-0); line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--forest); }
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 800; line-height: 0.95; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+.wrap { max-width: 1180px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.band { padding-block: clamp(56px, 8vw, 104px); }
+.band--forest { background: var(--forest); color: var(--on-forest); }
+.band--surface { background: var(--surface); }
+.eyebrow { font-family: var(--f-mono); font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange-strong); }
+.band--forest .eyebrow { color: var(--sand); }
+.section-head { display: grid; gap: 14px; max-width: 760px; margin-bottom: clamp(28px, 4vw, 48px); }
+.section-head h2 { font-size: var(--step-3); }
+.section-head p { color: var(--muted); font-size: var(--step-1); max-width: 62ch; }
+.band--forest .section-head p { color: var(--on-forest-muted); }
+.todo { font-family: var(--f-mono); font-size: 0.78rem; font-weight: 600; background: color-mix(in srgb, var(--orange) 18%, transparent); color: var(--ink); padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+.band--forest .todo { color: var(--on-forest); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--f-body); font-weight: 700; font-size: 0.98rem; text-decoration: none; border: 2px solid transparent; border-radius: var(--radius); padding: 12px 20px; cursor: pointer; transition: transform .15s ease, background-color .15s ease; }
+.btn--primary { background: var(--orange); color: var(--on-orange); }
+.btn--primary:hover { background: var(--orange-strong); }
+.btn--ghost { border-color: currentColor; background: transparent; color: inherit; }
+.btn--ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* Bandeau maquette */
+.draftbar { background: var(--orange); color: var(--on-orange); font-family: var(--f-mono); font-size: 0.78rem; font-weight: 600; text-align: center; padding-block: 6px; }
+
+/* En-tête */
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--forest); color: var(--on-forest); border-bottom: 1px solid color-mix(in srgb, var(--on-forest) 12%, transparent); }
+.site-head .wrap { display: flex; align-items: center; gap: 20px; min-height: 68px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; }
+.brand img { height: 46px; width: auto; }
+.brand span { white-space: nowrap; font-family: var(--f-display); font-weight: 900; font-size: 1.45rem; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1; }
+.brand small { display: block; font-family: var(--f-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.1em; color: var(--on-forest-muted); margin-top: 3px; }
+.nav { display: flex; gap: 18px; }
+.nav a { font-size: 0.92rem; font-weight: 600; text-decoration: none; color: var(--on-forest-muted); }
+.nav a:hover { color: var(--on-forest); }
+.menu-btn { display: none; background: transparent; color: var(--on-forest); border: 1.5px solid color-mix(in srgb, var(--on-forest) 40%, transparent); border-radius: var(--radius); font: 600 0.9rem var(--f-body); padding: 9px 12px; cursor: pointer; }
+.mobile-nav { background: var(--forest); border-top: 1px solid color-mix(in srgb, var(--on-forest) 12%, transparent); }
+.mobile-nav .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; padding-block: 12px 16px; }
+.mobile-nav a { color: var(--on-forest); text-decoration: none; font-weight: 600; padding: 8px 0; }
+@media (max-width: 980px) { .nav { display: none; } .menu-btn { display: inline-flex; } }
+@media (max-width: 420px) { .site-head .btn { padding: 10px 12px; font-size: 0.9rem; } .brand small { display: none; } .brand span { font-size: 1.2rem; } .brand img { height: 40px; } }
+
+/* Hero */
+.hero { background: var(--forest); color: var(--on-forest); padding-block: clamp(36px, 6vw, 72px) clamp(44px, 7vw, 88px); overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.hero h1 { font-size: var(--step-4); font-weight: 900; margin-top: 16px; }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero .lead { font-size: var(--step-1); color: var(--on-forest-muted); max-width: 52ch; margin-top: 22px; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 36px 0 0; border-top: 1px solid color-mix(in srgb, var(--on-forest) 22%, transparent); }
+.facts div { padding: 14px 14px 0 0; }
+.facts dt { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-forest-muted); }
+.facts dd { margin: 4px 0 0; font-family: var(--f-display); font-weight: 800; font-size: clamp(1.4rem, 2.6vw, 2rem); text-transform: uppercase; line-height: 1; font-variant-numeric: tabular-nums; }
+.hero-media { position: relative; justify-self: center; width: min(100%, 340px); }
+.hero-media video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; background: #0d140e; box-shadow: 0 30px 60px -20px rgba(0,0,0,.55); }
+.hero-media figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--on-forest-muted); margin-top: 10px; }
+.hero-media .tag { position: absolute; top: 12px; left: -14px; background: var(--orange); color: var(--on-orange); font: 700 0.75rem var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 10px; border-radius: 3px; }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero-media { width: min(100%, 300px); } .hero-media .tag { left: 8px; } }
+@media (max-width: 560px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .facts div { padding-bottom: 14px; } }
+
+/* Signature */
+.signature { background: var(--orange); color: var(--on-orange); padding-block: 18px; overflow: hidden; }
+.signature p { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.6rem, 4.4vw, 3.2rem); line-height: 1; letter-spacing: 0.01em; display: flex; flex-wrap: wrap; gap: 0 0.45em; }
+
+/* Pour qui */
+.cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); }
+.cases li { list-style: none; padding: 22px 24px 24px 0; border-right: 1px solid var(--line); }
+.cases li + li { padding-left: 24px; }
+.cases li:last-child { border-right: 0; }
+.cases b { display: block; font-family: var(--f-mono); font-size: 0.78rem; color: var(--orange-strong); margin-bottom: 10px; }
+.cases p { font-size: var(--step-1); font-weight: 500; line-height: 1.4; }
+.cases ul, .bikes { padding: 0; margin: 0; }
+@media (max-width: 760px) { .cases { grid-template-columns: 1fr; } .cases li, .cases li + li { padding: 18px 0; border-right: 0; border-bottom: 1px solid var(--line); } }
+.bikes-wrap { margin-top: 40px; display: grid; gap: 14px; }
+.bikes-wrap h3 { font-size: var(--step-2); }
+.bikes { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+.bikes li { font-weight: 600; font-size: 0.92rem; padding: 7px 12px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); }
+.bikes li.more { border-style: dashed; color: var(--muted); }
+
+/* Roadbook */
+.roadbook { list-style: none; padding: 0; margin: 0; border: 2px solid var(--on-forest); border-radius: 4px; }
+.rb-row { display: grid; grid-template-columns: 64px 92px 84px minmax(0, 1fr); border-top: 1px solid color-mix(in srgb, var(--on-forest) 28%, transparent); }
+.rb-row:first-child { border-top: 0; }
+.rb-row > * { padding: 14px 16px; border-left: 1px solid color-mix(in srgb, var(--on-forest) 28%, transparent); min-width: 0; }
+.rb-row > *:first-child { border-left: 0; }
+.rb-case { font-family: var(--f-display); font-weight: 900; font-size: 2rem; line-height: 1; color: var(--sand); font-variant-numeric: tabular-nums; }
+.rb-time { font-family: var(--f-mono); font-weight: 600; font-size: 0.95rem; font-variant-numeric: tabular-nums; padding-top: 18px !important; }
+.rb-tulip { display: grid; place-items: center; }
+.rb-tulip svg { width: 44px; height: 44px; }
+.rb-tulip svg * { fill: none; stroke: var(--on-forest); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.rb-tulip svg .dot { fill: var(--on-forest); stroke: none; }
+.rb-tulip svg .arrow { fill: var(--orange); stroke: none; }
+.rb-text h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; }
+.rb-text p { color: var(--on-forest-muted); }
+.rb-row.is-break .rb-text h3 { color: var(--sand); }
+.rb-note { margin-top: 14px; font-family: var(--f-mono); font-size: 0.78rem; color: var(--on-forest-muted); }
+@media (max-width: 640px) {
+  .rb-row { grid-template-columns: 52px minmax(0, 1fr); }
+  .rb-row .rb-tulip { display: none; }
+  .rb-row .rb-time { grid-column: 2; padding: 12px 14px 0 !important; border-left: 1px solid color-mix(in srgb, var(--on-forest) 28%, transparent); }
+  .rb-row .rb-case { grid-row: span 2; }
+  .rb-row .rb-text { grid-column: 2; padding-top: 4px; }
+}
+
+/* Niveaux */
+.levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.level { display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.level header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.level h3 { font-size: 2rem; }
+.level .status { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); white-space: nowrap; }
+.level .status.soon { background: color-mix(in srgb, var(--muted) 16%, transparent); color: var(--muted); }
+.level .who { font-weight: 600; font-size: var(--step-1); line-height: 1.35; }
+.level ul { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 6px; }
+.level footer { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px dashed var(--line); padding-top: 14px; font-variant-numeric: tabular-nums; }
+.level .price { font-family: var(--f-display); font-weight: 900; font-size: 2rem; }
+.level .dur { font-family: var(--f-mono); font-size: 0.85rem; color: var(--muted); }
+.level.is-soon { background: transparent; border-style: dashed; }
+@media (max-width: 900px) { .levels { grid-template-columns: 1fr; } }
+
+/* Vidéos */
+.reels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.reel { display: grid; gap: 10px; align-content: start; }
+.reel video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius); background: #0d140e; }
+.reel h3 { font-size: 1.3rem; }
+.reel p { font-size: 0.92rem; color: var(--muted); }
+.reel .len { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); }
+@media (max-width: 1000px) {
+  .reels { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(210px, 46%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
+  .reel { scroll-snap-align: start; }
+}
+
+/* Terrain */
+.terrain { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+.terrain-photos { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 12px; }
+.terrain-photos figure { margin: 0; }
+.terrain-photos img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
+.terrain-photos figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); margin-top: 6px; }
+.spec { display: grid; gap: 0; margin: 0; border-top: 2px solid var(--ink); }
+.spec div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.spec dt { font-family: var(--f-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-top: 2px; }
+.spec dd { margin: 0; font-weight: 500; }
+.ateliers { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 8px; }
+.ateliers li { display: flex; gap: 10px; align-items: baseline; }
+.ateliers li::before { content: ""; flex: none; width: 10px; height: 10px; background: var(--orange); transform: rotate(45deg) translateY(-1px); }
+.ateliers li.unsure::before { background: transparent; border: 2px solid var(--muted); }
+@media (max-width: 860px) { .terrain { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .spec div { grid-template-columns: 1fr; gap: 2px; } }
+
+/* Moniteur */
+.coach { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
+.coach-photo { position: relative; }
+.coach-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
+.coach h2 { font-size: var(--step-3); margin-top: 10px; }
+.coach .bio { font-size: var(--step-1); margin-top: 18px; max-width: 56ch; color: var(--on-forest-muted); }
+.coach .bio + .bio { margin-top: 12px; }
+.coach .cred { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
+.coach .cred span { font-family: var(--f-mono); font-size: 0.78rem; border: 1px solid color-mix(in srgb, var(--on-forest) 35%, transparent); border-radius: 3px; padding: 5px 9px; }
+.coach-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 26px; }
+.coach-strip img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px; }
+@media (max-width: 860px) { .coach { grid-template-columns: 1fr; } .coach-photo { max-width: 420px; } }
+
+/* Voyage */
+.voyage { position: relative; color: #f4f1e8; overflow: hidden; background: #3d2414; }
+.voyage video, .voyage .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.voyage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,14,8,.78) 0%, rgba(20,14,8,.45) 55%, rgba(20,14,8,.15) 100%); }
+.voyage .wrap { position: relative; z-index: 1; padding-block: clamp(72px, 12vw, 150px); }
+.voyage h2 { font-size: var(--step-3); max-width: 14ch; }
+.voyage p { font-size: var(--step-1); max-width: 46ch; margin-top: 16px; color: #e8e1d2; }
+.voyage .eyebrow { color: #f0c58f; }
+.voyage .btn { margin-top: 26px; }
+
+/* Équipement */
+.kit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 4vw, 48px); }
+.kit h3 { font-size: var(--step-2); padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+.kit ul { list-style: none; padding: 0; margin: 0; }
+.kit li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.kit li span:first-child { min-width: 0; }
+.req { flex: none; font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.req.must { color: var(--orange-strong); }
+.req.nice { color: var(--muted); }
+.kit-note { margin-top: 24px; color: var(--muted); }
+@media (max-width: 760px) { .kit { grid-template-columns: 1fr; } }
+
+/* Dates */
+.dates-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 40px); align-items: start; }
+.sessions { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
+.session { display: grid; grid-template-columns: 116px minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.s-date { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; line-height: 0.95; font-variant-numeric: tabular-nums; }
+.s-date b { display: block; font-size: 2.2rem; font-weight: 900; }
+.s-date small { font-size: 1rem; }
+.s-info { display: grid; gap: 6px; min-width: 0; }
+.s-level { font-weight: 700; }
+.seats { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--muted); font-variant-numeric: tabular-nums; flex-wrap: wrap; }
+.seat-dots { display: inline-flex; gap: 4px; }
+.seat-dots i { width: 12px; height: 12px; border-radius: 2px; border: 1.5px solid var(--ink); }
+.seat-dots i.taken { background: var(--ink); }
+.is-full .seats { color: var(--full); font-weight: 600; }
+.session .btn { padding: 10px 16px; }
+.gift { background: var(--forest); color: var(--on-forest); border-radius: var(--radius); padding: 26px; display: grid; gap: 14px; position: sticky; top: 96px; }
+.gift h3 { font-size: 2.2rem; }
+.gift p { color: var(--on-forest-muted); }
+.gift .price { font-family: var(--f-display); font-weight: 900; font-size: 3rem; line-height: 1; color: var(--sand); }
+.dates-note { margin-top: 16px; font-size: 0.9rem; color: var(--muted); }
+@media (max-width: 900px) { .dates-grid { grid-template-columns: 1fr; } .gift { position: static; } }
+@media (max-width: 520px) { .session { grid-template-columns: 84px minmax(0, 1fr); } .session .btn { grid-column: 1 / -1; } .s-date b { font-size: 1.8rem; } }
+
+/* Formulaire */
+.form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(24px, 5vw, 64px); align-items: start; }
+.form-aside p { color: var(--muted); }
+.form-aside p + p { margin-top: 12px; }
+.contact-lines { margin-top: 22px; display: grid; gap: 8px; font-family: var(--f-mono); font-size: 0.88rem; }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label, legend { font-weight: 600; font-size: 0.92rem; }
+input, select, textarea { font: 400 1rem var(--f-body); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 4px; padding: 11px 12px; width: 100%; }
+textarea { min-height: 96px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px color-mix(in srgb, var(--orange) 25%, transparent); }
+fieldset { border: 0; padding: 0; margin: 0; }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.seg label { position: relative; font-weight: 600; font-size: 0.9rem; }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg span { display: inline-block; padding: 8px 14px; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; background: var(--bg); }
+.seg input:checked + span { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.seg input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 2px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+.check input { width: 18px; height: 18px; margin-top: 3px; flex: none; accent-color: var(--orange); }
+.form-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.form-actions small { color: var(--muted); }
+.err { color: var(--full); font-size: 0.85rem; font-weight: 600; }
+.confirm { grid-column: 1 / -1; border: 2px solid var(--ok); border-radius: var(--radius); padding: 18px; display: grid; gap: 8px; background: color-mix(in srgb, var(--ok) 8%, transparent); }
+.confirm h3 { font-size: 1.6rem; }
+.confirm dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 6px 0 0; font-size: 0.92rem; }
+.confirm dt { color: var(--muted); }
+.confirm dd { margin: 0; font-weight: 600; }
+@media (max-width: 860px) { .form-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { form { grid-template-columns: 1fr; } }
+
+/* FAQ */
+.faq { max-width: 860px; border-top: 2px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 18px 40px 18px 0; position: relative; font-weight: 700; font-size: var(--step-1); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font-family: var(--f-display); font-size: 2rem; font-weight: 800; color: var(--orange-strong); }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding: 0 0 20px; color: var(--muted); max-width: 70ch; }
+
+/* Pied de page */
+.foot { background: var(--forest); color: var(--on-forest-muted); padding-block: 48px; }
+.foot .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 28px; align-items: center; }
+.foot img { height: 92px; width: auto; }
+.foot strong { color: var(--on-forest); font-family: var(--f-display); font-size: 1.6rem; text-transform: uppercase; display: block; }
+.foot nav { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.9rem; }
+.foot a { color: var(--on-forest-muted); }
+@media (max-width: 760px) { .foot .wrap { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="draftbar">Maquette V1 · dates, niveaux, tarifs et textes à valider · aucune réservation n'est enregistrée</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Trail Base Camp, retour en haut">
+      <img src="media/logo.png" alt="" width="567" height="640">
+      <div><span>Trail Base Camp</span><small>STAGES TRAIL &amp; MAXI-TRAIL</small></div>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#stage">Le stage</a>
+      <a href="#programme">Programme</a>
+      <a href="#niveaux">Niveaux</a>
+      <a href="#terrain">Terrain</a>
+      <a href="#moniteur">Moniteur</a>
+      <a href="#equipement">Équipement</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+    <a class="btn btn--primary" href="#dates">Réserver</a>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Sections" hidden>
+    <div class="wrap">
+      <a href="#stage">Le stage</a><a href="#programme">Programme</a>
+      <a href="#niveaux">Niveaux</a><a href="#consignes">Vidéos</a>
+      <a href="#terrain">Terrain</a><a href="#moniteur">Moniteur</a>
+      <a href="#equipement">Équipement</a><a href="#dates">Dates et tarifs</a>
+      <a href="#faq">FAQ</a><a href="#reserver">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Stages trail &amp; maxi-trail · Vert-Saint-Denis (77)</p>
+        <h1>Sors ton maxi-trail <em>du bitume.</em></h1>
+        <p class="lead">Une journée de pilotage tout-terrain sur ta propre moto, à 40 km de Paris. Six pilotes au maximum, un moniteur, et des ateliers qui vont du freinage sur gravier au franchissement.</p>
+        <div class="ctas">
+          <a class="btn btn--primary" href="#dates">Voir les prochaines dates</a>
+          <a class="btn btn--ghost" href="#programme">Le programme de la journée</a>
+        </div>
+        <dl class="facts">
+          <div><dt>Durée</dt><dd>1 journée</dd></div>
+          <div><dt>Moto</dt><dd>La tienne</dd></div>
+          <div><dt>Groupe</dt><dd>6 pilotes max</dd></div>
+          <div><dt>Tarif</dt><dd>249 €</dd></div>
+        </dl>
+      </div>
+      <figure class="hero-media">
+        <span class="tag">Filmé sur le terrain</span>
+        <video id="heroVideo" src="media/v-franchissement.mp4" poster="media/v-franchissement.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Le moniteur franchit une marche en planches sur un maxi-trail"></video>
+        <figcaption>Consigne du moniteur : le franchissement. Vert-Saint-Denis.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="signature" aria-label="Signature">
+    <div class="wrap"><p><span>Apprends.</span> <span>Progresse.</span> <span>Prends confiance.</span></p></div>
+  </div>
+
+  <section class="band" id="stage">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Le stage</p>
+        <h2>Ton trail sait faire bien plus que la route.</h2>
+        <p>Une école dédiée aux trails et maxi-trails. Tu viens avec ta moto, tu repars en sachant t'en servir hors bitume, en sécurité et sans te crisper.</p>
+      </div>
+      <ul class="cases">
+        <li><b>SI…</b><p>Tu as acheté un trail pour l'aventure, et il n'a jamais quitté le goudron.</p></li>
+        <li><b>SI…</b><p>Un chemin de gravier, une ornière, une descente : avec plus de 200 kg sous toi, tu te crispes.</p></li>
+        <li><b>SI…</b><p>Tu prépares un voyage au Maroc, dans les Balkans ou en Islande, et tu veux arriver prêt.</p></li>
+      </ul>
+      <div class="bikes-wrap">
+        <h3>Motos bienvenues</h3>
+        <ul class="bikes">
+          <li>BMW R 1300 GS</li><li>BMW GS Adventure</li><li>BMW F 900 GS</li>
+          <li>Yamaha Ténéré 700</li><li>Honda Africa Twin</li><li>Honda Transalp</li>
+          <li>KTM 890 / 1290 Adventure</li><li>Triumph Tiger</li><li>Ducati Multistrada</li>
+          <li>Ducati DesertX</li><li>Suzuki V-Strom</li><li>Aprilia Tuareg</li>
+          <li class="more">et tous les trails</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--forest" id="programme">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Programme · le roadbook de ta journée</p>
+        <h2>Le déroulé de la journée</h2>
+        <p>On commence à l'arrêt, on finit sur le parcours. Chaque atelier s'appuie sur le précédent.</p>
+      </div>
+      <ol class="roadbook" id="roadbook"></ol>
+      <p class="rb-note">Horaires indicatifs, adaptés au groupe et à la météo. <span class="todo">Horaires et déjeuner à confirmer</span></p>
+    </div>
+  </section>
+
+  <section class="band" id="niveaux">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Niveaux</p>
+        <h2>Trois niveaux, un seul principe : ton rythme.</h2>
+        <p>Tu choisis ton niveau à la réservation. Si tu hésites, prends Découverte : le moniteur ajuste sur place.</p>
+      </div>
+      <div class="levels">
+        <article class="level">
+          <header><h3>Découverte</h3><span class="status">Ouvert</span></header>
+          <p class="who">Tu débutes hors bitume, ou presque.</p>
+          <ul>
+            <li>Position debout et position cross</li>
+            <li>Maniabilité à basse vitesse</li>
+            <li>Freinage sur terrain meuble</li>
+            <li>Relever ta moto sans te blesser</li>
+          </ul>
+          <footer><span class="price">249 €</span><span class="dur">1 jour · ta moto</span></footer>
+        </article>
+        <article class="level">
+          <header><h3>Progression</h3><span class="status">Ouvert</span></header>
+          <p class="who">Tu roules déjà sur les chemins et tu veux de la méthode.</p>
+          <ul>
+            <li>Franchissements de marches et de planches</li>
+            <li>Freinage dégressif et regard</li>
+            <li>Enchaînements sur parcours</li>
+            <li>Corrections individuelles</li>
+          </ul>
+          <footer><span class="price">249 €</span><span class="dur">1 jour · ta moto</span></footer>
+        </article>
+        <article class="level is-soon">
+          <header><h3>Prépa voyage</h3><span class="status soon">Bientôt</span></header>
+          <p class="who">Tu pars loin et tu veux arriver prêt.</p>
+          <ul>
+            <li>Pilotage moto chargée</li>
+            <li>Lecture de terrain et de piste</li>
+            <li>Mécanique de bord</li>
+            <li>Gérer la fatigue sur plusieurs jours</li>
+          </ul>
+          <footer><span class="price">À venir</span><span class="dur">2 jours</span></footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--surface" id="consignes">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Vidéos · les consignes du moniteur</p>
+        <h2>Ce que tu vas travailler, en vrai.</h2>
+        <p>Des extraits tournés pendant les stages, sur le terrain de Vert-Saint-Denis. Le son démarre quand tu lances la vidéo.</p>
+      </div>
+      <div class="reels" id="reels"></div>
+    </div>
+  </section>
+
+  <section class="band" id="terrain">
+    <div class="wrap terrain">
+      <div class="terrain-photos">
+        <figure><img src="media/terrain-1.jpg" alt="Aire de gravier du terrain, un pilote sur le talus en arrière-plan"><figcaption>La zone de maniabilité</figcaption></figure>
+        <figure><img src="media/terrain-3.jpg" alt="Un maxi-trail franchit une marche en planches"><figcaption>L'atelier franchissement</figcaption></figure>
+      </div>
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Le terrain · 48,57° N · 2,62° E</p>
+          <h2>Un terrain privé à Vert-Saint-Denis.</h2>
+          <p>À 10 minutes de Melun, à 40 km de Paris. Pas de voiture en face, pas de randonneur au détour du chemin : tu roules à ton rythme.</p>
+        </div>
+        <dl class="spec">
+          <div><dt>Commune</dt><dd>Vert-Saint-Denis (77240), Seine-et-Marne</dd></div>
+          <div><dt>Surface</dt><dd>10 hectares <span class="todo">à confirmer</span></dd></div>
+          <div><dt>Accès</dt><dd>Adresse exacte envoyée avec la confirmation de réservation</dd></div>
+          <div><dt>Stationnement</dt><dd>Sur place <span class="todo">à confirmer</span></dd></div>
+        </dl>
+        <ul class="ateliers">
+          <li>Zone de maniabilité sur gravier</li>
+          <li>Marches et planches de franchissement</li>
+          <li>Talus et pistes en terre</li>
+          <li class="unsure">Sable, montées et dévers <span class="todo">à confirmer</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--forest" id="moniteur">
+    <div class="wrap coach">
+      <div class="coach-photo">
+        <img src="media/moniteur.jpg" alt="Portrait du moniteur, en tenue tout-terrain, devant sa moto dans le désert">
+      </div>
+      <div>
+        <p class="eyebrow">Ton moniteur</p>
+        <h2>Sylvain <span class="todo">nom à confirmer</span></h2>
+        <p class="bio">Pilote tout-terrain, il roule en enduro jusque dans les dunes du Maroc. Sur le terrain, il explique, il montre, puis il te regarde faire et corrige.</p>
+        <p class="bio">Sa méthode tient en trois temps, et tu la vois dans les vidéos : la consigne, la démo, puis à toi de jouer.</p>
+        <div class="cred">
+          <span>Diplôme : à préciser</span>
+          <span>Carte professionnelle n° : à préciser</span>
+        </div>
+        <div class="coach-strip">
+          <img src="media/desert-dune-pilote.jpg" alt="Le moniteur sur sa moto au sommet d'une dune">
+          <img src="media/desert-guidon.jpg" alt="Vue depuis le guidon sur une mer de dunes">
+          <img src="media/desert-deux-motos.jpg" alt="Deux motos d'enduro garées sur une crête de dune">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="voyage" aria-labelledby="voyageTitle">
+    <img class="poster" src="media/v-dunes.jpg" alt="">
+    <video id="bandVideo" src="media/v-dunes.mp4" poster="media/v-dunes.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
+    <div class="wrap">
+      <p class="eyebrow">Après le stage</p>
+      <h2 id="voyageTitle">Le voyage commence sur le gravier.</h2>
+      <p>Le Maroc, les Balkans, les pistes d'Islande. Avant d'y aller chargé, tu apprends ici à maîtriser ta moto quand le sol bouge.</p>
+      <a class="btn btn--primary" href="#reserver" data-type="question" data-msg="Je veux être prévenu de l'ouverture de la Prépa voyage.">Être prévenu de la Prépa voyage</a>
+    </div>
+  </section>
+
+  <section class="band" id="equipement">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Équipement</p>
+        <h2>Ce qu'il faut prévoir</h2>
+        <p>Tu reçois cette liste par e-mail avec ta confirmation, et un rappel deux jours avant le stage.</p>
+      </div>
+      <div class="kit">
+        <div>
+          <h3>Pour toi</h3>
+          <ul>
+            <li><span>Casque intégral ou cross, avec lunettes ou écran</span><span class="req must">Obligatoire</span></li>
+            <li><span>Bottes montantes, idéalement tout-terrain</span><span class="req must">Obligatoire</span></li>
+            <li><span>Gants</span><span class="req must">Obligatoire</span></li>
+            <li><span>Veste et pantalon avec protections aux coudes, épaules et genoux</span><span class="req must">Obligatoire</span></li>
+            <li><span>Protection dorsale</span><span class="req nice">Recommandé</span></li>
+            <li><span>Poche à eau ou gourde</span><span class="req nice">Recommandé</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Pour ta moto</h3>
+          <ul>
+            <li><span>Le plein fait</span><span class="req must">Obligatoire</span></li>
+            <li><span>Permis, carte grise et attestation d'assurance</span><span class="req must">Obligatoire</span></li>
+            <li><span>Pneus mixtes ou à crampons</span><span class="req nice">Recommandé</span></li>
+            <li><span>Sabot moteur, crash bars, protège-mains</span><span class="req nice">Recommandé</span></li>
+            <li><span>Valises et top-case démontés</span><span class="req nice">Recommandé</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="kit-note">Sur place : café d'accueil et eau. Déjeuner <span class="todo">inclus ou non, à confirmer</span>.</p>
+    </div>
+  </section>
+
+  <section class="band band--surface" id="dates">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Dates et tarifs</p>
+        <h2>Prochaines dates</h2>
+        <p>Les stages ont lieu le dimanche, de 8h45 à 17h. Six places par date, pas une de plus.</p>
+      </div>
+      <div class="dates-grid">
+        <div>
+          <ul class="sessions" id="sessions"></ul>
+          <p class="dates-note"><span class="todo">Dates d'exemple</span> à remplacer par le vrai calendrier. Une date te manque ? Écris-nous, on ouvre une session dès 4 inscrits.</p>
+        </div>
+        <aside class="gift" aria-labelledby="giftTitle">
+          <p class="eyebrow">Bon cadeau</p>
+          <h3 id="giftTitle">Offre un stage</h3>
+          <p class="price">249 €</p>
+          <p>Valable 12 mois, sur la date et le niveau au choix. Tu reçois le bon par e-mail, prêt à imprimer ou à transférer.</p>
+          <a class="btn btn--primary" href="#reserver" data-type="gift">Offrir un bon cadeau</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="reserver">
+    <div class="wrap form-grid">
+      <div class="form-aside">
+        <div class="section-head">
+          <p class="eyebrow">Réserver</p>
+          <h2>Réserve ta place ou pose ta question.</h2>
+        </div>
+        <p>Pour réserver, choisis ta date : tu passes ensuite au paiement sécurisé et tu reçois la confirmation par e-mail.</p>
+        <p>Une question sur ta moto, ton niveau ou une date de groupe ? Choisis « Poser une question », on te répond sous 48 h.</p>
+        <div class="contact-lines">
+          <span>contact@trailbasecamp.fr <span class="todo">à créer</span></span>
+          <span>06 00 00 00 00 <span class="todo">à remplacer</span></span>
+        </div>
+      </div>
+
+      <form id="bookForm" novalidate>
+        <fieldset class="field full">
+          <legend>Je veux…</legend>
+          <div class="seg" role="radiogroup">
+            <label><input type="radio" name="type" id="t-book" value="book" checked><span>Réserver une place</span></label>
+            <label><input type="radio" name="type" id="t-gift" value="gift"><span>Offrir un bon cadeau</span></label>
+            <label><input type="radio" name="type" id="t-question" value="question"><span>Poser une question</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field full" data-show="book">
+          <label for="f-session">Date du stage</label>
+          <select id="f-session" name="session"></select>
+        </div>
+
+        <div class="field">
+          <label for="f-first">Prénom</label>
+          <input id="f-first" name="first" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="f-last">Nom</label>
+          <input id="f-last" name="last" autocomplete="family-name" required>
+        </div>
+        <div class="field">
+          <label for="f-email">E-mail</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="f-phone">Téléphone</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+
+        <div class="field" data-show="book">
+          <label for="f-bike">Ta moto</label>
+          <select id="f-bike" name="bike">
+            <option value="">Choisis ton modèle</option>
+            <option>BMW R 1300 GS / R 1250 GS</option>
+            <option>BMW GS Adventure</option>
+            <option>BMW F 750 / 800 / 850 / 900 GS</option>
+            <option>Yamaha Ténéré 700</option>
+            <option>Honda Africa Twin</option>
+            <option>Honda Transalp</option>
+            <option>KTM Adventure</option>
+            <option>Triumph Tiger</option>
+            <option>Ducati Multistrada / DesertX</option>
+            <option>Suzuki V-Strom</option>
+            <option>Aprilia Tuareg</option>
+            <option>Autre trail</option>
+          </select>
+        </div>
+        <div class="field" data-show="book">
+          <label for="f-exp">Tu as déjà roulé hors bitume ?</label>
+          <select id="f-exp" name="exp">
+            <option>Jamais</option>
+            <option>Un peu, quelques chemins</option>
+            <option>Régulièrement</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="f-msg">Message <span style="font-weight:400;color:var(--muted)">(pneus, protections, question…)</span></label>
+          <textarea id="f-msg" name="msg"></textarea>
+        </div>
+
+        <div class="field full" data-show="book gift">
+          <label class="check"><input type="checkbox" id="f-cgv" name="cgv"> <span>J'accepte les conditions générales de vente et la politique d'annulation. <span class="todo">CGV à rédiger</span></span></label>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn--primary" type="submit" id="submitBtn">Continuer vers le paiement</button>
+          <small id="submitHint">Paiement sécurisé par carte bancaire.</small>
+          <span class="err" id="formErr" role="alert"></span>
+        </div>
+        <div class="confirm" id="confirm" hidden tabindex="-1"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="band band--surface" id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Questions fréquentes</p>
+        <h2>Avant de venir</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Et si je fais tomber ma moto ?</summary><p>Ça arrive, et ça fait partie de l'apprentissage. On roule à basse vitesse et on t'apprend à relever ta moto. Des protections (crash bars, protège-mains) limitent fortement la casse. Vérifie avant le stage ce que ton assurance couvre sur terrain privé.</p></details>
+        <details><summary>Je débute et mon trail est lourd. C'est pour moi ?</summary><p>Oui, le niveau Découverte est fait pour ça. On commence à l'arrêt, puis au pas, et on n'accélère que quand tu es à l'aise.</p></details>
+        <details><summary>Faut-il des pneus à crampons ?</summary><p>Ce n'est pas obligatoire, mais des pneus mixtes changent tout sur le gravier. Indique tes pneus à la réservation et on te dit si ça passe.</p></details>
+        <details><summary>Et s'il pleut ?</summary><p>On roule sous la pluie : c'est une bonne école. Si le terrain devient dangereux, le stage est reporté sans frais. <span class="todo">Politique météo à valider</span></p></details>
+        <details><summary>Je peux annuler ou reporter ?</summary><p><span class="todo">À définir</span> Proposition : remboursement intégral jusqu'à 14 jours avant le stage, report gratuit jusqu'à 7 jours avant.</p></details>
+        <details><summary>Je peux venir sans ma moto ?</summary><p>Pas pour l'instant : tout le principe est d'apprendre sur la moto que tu utilises ensuite. Si la demande existe, on étudiera une location.</p></details>
+        <details><summary>Je peux venir avec un accompagnant ?</summary><p>Le stage se fait seul sur la moto. Un accompagnant peut venir regarder depuis la zone prévue. <span class="todo">À confirmer avec le terrain</span></p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img src="media/logo.png" alt="Logo Trail Base Camp" width="567" height="640">
+    <div>
+      <strong>Trail Base Camp</strong>
+      <p>Stages de pilotage tout-terrain pour trails et maxi-trails, à Vert-Saint-Denis (77).</p>
+    </div>
+    <nav aria-label="Liens légaux">
+      <a href="#reserver">Contact</a>
+      <a href="#faq">FAQ</a>
+      <a href="#top">Mentions légales</a>
+      <a href="#top">CGV</a>
+      <a href="#top">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  // Programme : cases du roadbook. turn = direction de la tulipe.
+  var ROADBOOK = [
+    { t: "08:45", turn: "s", h: "Accueil et contrôle des motos", p: "Café, tour des motos : pression des pneus, réglage des leviers, protections." },
+    { t: "09:15", turn: "s", h: "Briefing", p: "Sécurité, objectifs de chacun, règles du terrain." },
+    { t: "09:30", turn: "r", h: "Position debout et position cross", p: "Torse sorti, jambes tendues, calé contre le réservoir. La base de tout le reste." },
+    { t: "10:30", turn: "l", h: "Maniabilité lente", p: "Slalom, une main, demi-tour, jeu d'embrayage en première." },
+    { t: "11:30", turn: "r", h: "Freinage sur terrain meuble", p: "Le frein avant freine, l'arrière fait déraper. Regard et trajectoire." },
+    { t: "12:30", turn: "s", h: "Pause déjeuner", p: "On refait le point sur la matinée.", brk: true },
+    { t: "13:30", turn: "l", h: "Franchissements", p: "Marches et planches : approche calme, regard sur la sortie, le corps absorbe." },
+    { t: "14:30", turn: "r", h: "Relever sa moto", p: "La bonne technique pour relever plus de 200 kg sans se faire mal." },
+    { t: "15:15", turn: "l", h: "Mise en pratique sur parcours", p: "On enchaîne tous les ateliers, à ton rythme." },
+    { t: "16:30", turn: "s", h: "Débrief", p: "Tes points forts, tes axes de progrès, et quoi travailler ensuite." }
+  ];
+
+  var REELS = [
+    { src: "v-position-cross", h: "Position cross", p: "Torse sorti, jambes tendues, hanches en arrière.", len: "0:29" },
+    { src: "v-reservoir", h: "Colle-toi au réservoir", p: "Assis ou debout, toujours calé devant.", len: "0:25" },
+    { src: "v-slalom", h: "Slalom à une main", p: "Debout, en première, avec l'embrayage.", len: "0:51" },
+    { src: "v-freinage", h: "Freinage", p: "Le frein avant freine. L'arrière fait déraper.", len: "1:03" },
+    { src: "v-franchissement", h: "Franchissement", p: "Approche calme, regard sur la sortie.", len: "0:39" }
+  ];
+
+  // Sessions d'exemple (dimanches). left = places restantes sur 6.
+  var SESSIONS = [
+    { id: "2026-11-22", d: "22", m: "nov.", y: "2026", lvl: "Découverte", left: 2 },
+    { id: "2026-12-06", d: "6", m: "déc.", y: "2026", lvl: "Découverte", left: 5 },
+    { id: "2026-12-13", d: "13", m: "déc.", y: "2026", lvl: "Progression", left: 0 },
+    { id: "2027-01-17", d: "17", m: "janv.", y: "2027", lvl: "Découverte", left: 6 },
+    { id: "2027-01-31", d: "31", m: "janv.", y: "2027", lvl: "Progression", left: 6 },
+    { id: "2027-02-14", d: "14", m: "févr.", y: "2027", lvl: "Découverte", left: 6 },
+    { id: "2027-03-07", d: "7", m: "mars", y: "2027", lvl: "Découverte", left: 6 },
+    { id: "2027-03-21", d: "21", m: "mars", y: "2027", lvl: "Progression", left: 6 }
+  ];
+  var CAP = 6, PRICE = 249;
+
+  function el(tag, attrs, html) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (html != null) n.innerHTML = html;
+    return n;
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  function tulip(turn) {
+    var path = turn === "l" ? "M24 38 V24 L12 14" : turn === "r" ? "M24 38 V24 L36 14" : "M24 38 V10";
+    var head = turn === "l" ? '<polygon class="arrow" points="6,10 16,9 11,18"/>' : turn === "r" ? '<polygon class="arrow" points="42,10 32,9 37,18"/>' : '<polygon class="arrow" points="24,3 30,12 18,12"/>';
+    return '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="' + path + '"/>' + head + '<circle class="dot" cx="24" cy="40" r="4"/></svg>';
+  }
+
+  // Roadbook
+  var rb = document.getElementById("roadbook");
+  ROADBOOK.forEach(function (r, i) {
+    var li = el("li", { class: "rb-row" + (r.brk ? " is-break" : "") });
+    li.innerHTML =
+      '<div class="rb-case">' + String(i + 1).padStart(2, "0") + "</div>" +
+      '<div class="rb-time">' + r.t + "</div>" +
+      '<div class="rb-tulip">' + tulip(r.turn) + "</div>" +
+      '<div class="rb-text"><h3>' + esc(r.h) + "</h3><p>" + esc(r.p) + "</p></div>";
+    rb.appendChild(li);
+  });
+
+  // Vidéos
+  var reels = document.getElementById("reels");
+  REELS.forEach(function (v) {
+    var a = el("article", { class: "reel" });
+    a.innerHTML =
+      '<video controls playsinline preload="none" poster="media/' + v.src + '.jpg" src="media/' + v.src + '.mp4" aria-label="' + esc(v.h) + '"></video>' +
+      "<div><h3>" + esc(v.h) + "</h3><p>" + esc(v.p) + '</p><span class="len">' + v.len + "</span></div>";
+    reels.appendChild(a);
+  });
+  // Une seule vidéo avec son à la fois
+  reels.addEventListener("play", function (e) {
+    reels.querySelectorAll("video").forEach(function (v) { if (v !== e.target) v.pause(); });
+  }, true);
+
+  // Sessions
+  var list = document.getElementById("sessions");
+  var select = document.getElementById("f-session");
+  SESSIONS.forEach(function (s) {
+    var full = s.left <= 0;
+    var dots = "";
+    for (var i = 0; i < CAP; i++) dots += '<i class="' + (i < CAP - s.left ? "taken" : "") + '"></i>';
+    var li = el("li", { class: "session" + (full ? " is-full" : "") });
+    li.innerHTML =
+      '<div class="s-date"><small>Dim.</small><b>' + s.d + "</b><small>" + s.m + " " + s.y + "</small></div>" +
+      '<div class="s-info"><span class="s-level">' + s.lvl + " · " + PRICE + ' €</span>' +
+      '<span class="seats"><span class="seat-dots" aria-hidden="true">' + dots + "</span>" +
+      (full ? "Complet" : s.left + (s.left > 1 ? " places restantes" : " place restante")) + "</span></div>";
+    var b = el("a", { class: "btn " + (full ? "btn--ghost" : "btn--primary"), href: "#reserver" }, full ? "Liste d'attente" : "Réserver");
+    b.addEventListener("click", function () {
+      setType(full ? "question" : "book");
+      if (full) document.getElementById("f-msg").value = "Liste d'attente pour le dimanche " + s.d + " " + s.m + " " + s.y + " (" + s.lvl + ").";
+      else select.value = s.id;
+    });
+    li.appendChild(b);
+    list.appendChild(li);
+
+    var o = el("option", { value: s.id }, "Dim. " + s.d + " " + s.m + " " + s.y + " · " + s.lvl + (full ? " · complet" : " · " + s.left + " pl."));
+    if (full) o.disabled = true;
+    select.appendChild(o);
+  });
+
+  // Type de demande
+  var form = document.getElementById("bookForm");
+  var submitBtn = document.getElementById("submitBtn");
+  var hint = document.getElementById("submitHint");
+  function setType(t) {
+    var r = document.getElementById("t-" + t);
+    if (r) r.checked = true;
+    applyType();
+  }
+  function currentType() { return form.querySelector('input[name="type"]:checked').value; }
+  function applyType() {
+    var t = currentType();
+    form.querySelectorAll("[data-show]").forEach(function (n) {
+      n.hidden = n.getAttribute("data-show").split(" ").indexOf(t) === -1;
+    });
+    submitBtn.textContent = t === "question" ? "Envoyer ma question" : "Continuer vers le paiement";
+    hint.textContent = t === "question" ? "Réponse sous 48 h." : "Paiement sécurisé par carte bancaire.";
+  }
+  form.querySelectorAll('input[name="type"]').forEach(function (r) { r.addEventListener("change", applyType); });
+  document.querySelectorAll("[data-type]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      setType(a.getAttribute("data-type"));
+      var m = a.getAttribute("data-msg");
+      if (m) document.getElementById("f-msg").value = m;
+    });
+  });
+  applyType();
+
+  // Envoi (maquette : rien ne part)
+  var err = document.getElementById("formErr");
+  var confirmBox = document.getElementById("confirm");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    err.textContent = "";
+    var t = currentType();
+    var first = form.first.value.trim(), last = form.last.value.trim(), email = form.email.value.trim();
+    if (!first || !last) { err.textContent = "Indique ton prénom et ton nom."; return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = "Vérifie ton adresse e-mail."; return; }
+    if (t === "book" && !form.session.value) { err.textContent = "Choisis une date."; return; }
+    if (t === "book" && !form.bike.value) { err.textContent = "Indique ta moto."; return; }
+    if (t !== "question" && !form.cgv.checked) { err.textContent = "Coche l'acceptation des conditions de vente."; return; }
+
+    var rows = [["Demande", t === "book" ? "Réservation" : t === "gift" ? "Bon cadeau" : "Question"], ["Nom", first + " " + last], ["E-mail", email]];
+    if (t === "book") {
+      var opt = form.session.options[form.session.selectedIndex];
+      rows.push(["Stage", opt ? opt.textContent : ""], ["Moto", form.bike.value], ["Expérience", form.exp.value]);
+    }
+    if (t !== "question") rows.push(["Montant", PRICE + " €"]);
+    confirmBox.innerHTML =
+      "<h3>" + (t === "question" ? "Question prête à partir" : "Prêt pour le paiement") + "</h3>" +
+      "<p>Ceci est une maquette : aucune donnée n'a été envoyée. " +
+      (t === "question" ? "Sur le vrai site, ta question arrive par e-mail à l'équipe." : "Sur le vrai site, ce bouton ouvre le paiement sécurisé Stripe de la date choisie.") + "</p>" +
+      "<dl>" + rows.map(function (r) { return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("") + "</dl>";
+    confirmBox.hidden = false;
+    confirmBox.focus();
+  });
+
+  // Menu mobile
+  var menuBtn = document.getElementById("menuBtn");
+  var mobileNav = document.getElementById("mobileNav");
+  menuBtn.addEventListener("click", function () {
+    var open = mobileNav.hidden;
+    mobileNav.hidden = !open;
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.textContent = open ? "Fermer" : "Menu";
+  });
+  mobileNav.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") { mobileNav.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); menuBtn.textContent = "Menu"; }
+  });
+
+  // Mouvement réduit : pas de vidéo en lecture automatique
+  var rm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  function motion() {
+    ["heroVideo", "bandVideo"].forEach(function (id) {
+      var v = document.getElementById(id);
+      if (!v) return;
+      if (rm && rm.matches) { v.removeAttribute("autoplay"); v.pause(); }
+      else { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    });
+  }
+  motion();
+  if (rm && rm.addEventListener) rm.addEventListener("change", motion);
+})();
+</script>
+</body>
+</html>
