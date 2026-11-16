@@ -7,25 +7,25 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Trail Base Camp</title>
 <link rel="icon" type="image/png" href="media/logo.png">
-<meta name="description" content="Stages de pilotage tout-terrain pour trails et maxi-trails, sur ta propre moto, à Vert-Saint-Denis (77), à 40 km de Paris.">
+<meta name="description" content="Stages de pilotage tout-terrain pour trails, maxi-trails et scramblers, sur ta propre moto, à Vert-Saint-Denis (77), à 40 km de Paris.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: roadbook de rallye. Pages en bandes pleine largeur ; le programme est une feuille de roadbook (cases numérotées, tulipes). */
+/* Layout : roadbook de rallye. Bandes claires en alternance, une seule bande sombre (le programme). Thème clair unique, choisi pour la marque. */
 :root {
-  --bg: #eeede5;
-  --surface: #f8f7f1;
+  color-scheme: light;
+  --bg: #f3f2eb;
+  --surface: #fbfaf6;
   --ink: #171c15;
-  --muted: #555c50;
-  --line: #cbcbbd;
+  --muted: #545b4f;
+  --line: #cfcfc2;
   --forest: #1f3324;
-  --forest-2: #2b4430;
   --on-forest: #eef0e6;
   --on-forest-muted: #b9c2ad;
   --orange: #d9661a;
-  --orange-strong: #b9530f;
+  --orange-strong: #b0500f;
   --on-orange: #1a1208;
   --sand: #d8b98a;
   --ok: #3f7a3a;
@@ -40,20 +40,6 @@
   --step-3: clamp(2.2rem, 4.5vw, 3.4rem);
   --step-4: clamp(3rem, 8.5vw, 6.6rem);
   --radius: 6px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #10150f; --surface: #182017; --ink: #ecebe2; --muted: #a6ad9a; --line: #2f392c;
-    --forest: #1b2b1d; --forest-2: #24382a; --on-forest: #eef0e6; --on-forest-muted: #aab49e;
-    --orange: #ee8a3d; --orange-strong: #f39b55; --on-orange: #1a1208; --sand: #c7a573;
-    --ok: #7cbf6f; --full: #e07a5c; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #10150f; --surface: #182017; --ink: #ecebe2; --muted: #a6ad9a; --line: #2f392c;
-  --forest: #1b2b1d; --forest-2: #24382a; --on-forest: #eef0e6; --on-forest-muted: #aab49e;
-  --orange: #ee8a3d; --orange-strong: #f39b55; --on-orange: #1a1208; --sand: #c7a573;
-  --ok: #7cbf6f; --full: #e07a5c; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -80,22 +66,21 @@ p { margin: 0; }
 .section-head h2 { font-size: var(--step-3); }
 .section-head p { color: var(--muted); font-size: var(--step-1); max-width: 62ch; }
 .band--forest .section-head p { color: var(--on-forest-muted); }
-.todo { font-family: var(--f-mono); font-size: 0.78rem; font-weight: 600; background: color-mix(in srgb, var(--orange) 18%, transparent); color: var(--ink); padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+.todo { font-family: var(--f-mono); font-size: 0.78rem; font-weight: 600; background: color-mix(in srgb, var(--orange) 18%, transparent); color: var(--ink); padding: 1px 6px; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .band--forest .todo { color: var(--on-forest); }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--f-body); font-weight: 700; font-size: 0.98rem; text-decoration: none; border: 2px solid transparent; border-radius: var(--radius); padding: 12px 20px; cursor: pointer; transition: transform .15s ease, background-color .15s ease; }
 .btn--primary { background: var(--orange); color: var(--on-orange); }
-.btn--primary:hover { background: var(--orange-strong); }
+.btn--primary:hover { background: var(--orange-strong); color: var(--surface); }
 .btn--ghost { border-color: currentColor; background: transparent; color: inherit; }
 .btn--ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
 .btn:active { transform: translateY(1px); }
-.btn[disabled] { opacity: .5; cursor: not-allowed; }
 
 /* Bandeau maquette */
 .draftbar { background: var(--orange); color: var(--on-orange); font-family: var(--f-mono); font-size: 0.78rem; font-weight: 600; text-align: center; padding-block: 6px; }
 
 /* En-tête */
-.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--forest); color: var(--on-forest); border-bottom: 1px solid color-mix(in srgb, var(--on-forest) 12%, transparent); }
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--forest); color: var(--on-forest); }
 .site-head .wrap { display: flex; align-items: center; gap: 20px; min-height: 68px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; }
 .brand img { height: 46px; width: auto; }
@@ -108,49 +93,53 @@ p { margin: 0; }
 .mobile-nav { background: var(--forest); border-top: 1px solid color-mix(in srgb, var(--on-forest) 12%, transparent); }
 .mobile-nav .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; padding-block: 12px 16px; }
 .mobile-nav a { color: var(--on-forest); text-decoration: none; font-weight: 600; padding: 8px 0; }
-@media (max-width: 980px) { .nav { display: none; } .menu-btn { display: inline-flex; } }
-@media (max-width: 420px) { .site-head .btn { padding: 10px 12px; font-size: 0.9rem; } .brand small { display: none; } .brand span { font-size: 1.2rem; } .brand img { height: 40px; } }
+@media (max-width: 1020px) { .nav { display: none; } .menu-btn { display: inline-flex; } }
+@media (max-width: 480px) { .site-head .wrap { gap: 10px; } .site-head .btn { padding: 9px 11px; font-size: 0.88rem; } .menu-btn { padding: 8px 10px; } .brand { min-width: 0; } .brand small { display: none; } .brand span { font-size: 1.05rem; } .brand img { height: 36px; } }
 
 /* Hero */
-.hero { background: var(--forest); color: var(--on-forest); padding-block: clamp(36px, 6vw, 72px) clamp(44px, 7vw, 88px); overflow: hidden; }
+.hero { padding-block: clamp(36px, 6vw, 72px) clamp(44px, 7vw, 88px); overflow: hidden; }
 .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
 .hero h1 { font-size: var(--step-4); font-weight: 900; margin-top: 16px; }
 .hero h1 em { font-style: normal; color: var(--orange); }
-.hero .lead { font-size: var(--step-1); color: var(--on-forest-muted); max-width: 52ch; margin-top: 22px; }
+.hero .lead { font-size: var(--step-1); color: var(--muted); max-width: 54ch; margin-top: 22px; }
 .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 36px 0 0; border-top: 1px solid color-mix(in srgb, var(--on-forest) 22%, transparent); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 36px 0 0; border-top: 2px solid var(--ink); }
 .facts div { padding: 14px 14px 0 0; }
-.facts dt { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-forest-muted); }
+.facts dt { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .facts dd { margin: 4px 0 0; font-family: var(--f-display); font-weight: 800; font-size: clamp(1.4rem, 2.6vw, 2rem); text-transform: uppercase; line-height: 1; font-variant-numeric: tabular-nums; }
-.hero-media { position: relative; justify-self: center; width: min(100%, 340px); }
-.hero-media video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; background: #0d140e; box-shadow: 0 30px 60px -20px rgba(0,0,0,.55); }
-.hero-media figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--on-forest-muted); margin-top: 10px; }
-.hero-media .tag { position: absolute; top: 12px; left: -14px; background: var(--orange); color: var(--on-orange); font: 700 0.75rem var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 10px; border-radius: 3px; }
-@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero-media { width: min(100%, 300px); } .hero-media .tag { left: 8px; } }
+.hero-media { position: relative; justify-self: center; width: min(100%, 340px); margin: 0; }
+.hero-media video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; background: #26301f; box-shadow: 0 30px 60px -24px rgba(23, 28, 21, .45); }
+.hero-media figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); margin-top: 10px; }
+.hero-media .tag { position: absolute; top: 12px; left: -14px; z-index: 1; background: var(--orange); color: var(--on-orange); font: 700 0.75rem var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 10px; border-radius: 3px; }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .hero-media { width: min(100%, 300px); } .hero-media .tag { left: 8px; } }
 @media (max-width: 560px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .facts div { padding-bottom: 14px; } }
 
 /* Signature */
 .signature { background: var(--orange); color: var(--on-orange); padding-block: 18px; overflow: hidden; }
 .signature p { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(1.6rem, 4.4vw, 3.2rem); line-height: 1; letter-spacing: 0.01em; display: flex; flex-wrap: wrap; gap: 0 0.45em; }
 
-/* Pour qui */
-.cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); }
-.cases li { list-style: none; padding: 22px 24px 24px 0; border-right: 1px solid var(--line); }
-.cases li + li { padding-left: 24px; }
-.cases li:last-child { border-right: 0; }
-.cases b { display: block; font-family: var(--f-mono); font-size: 0.78rem; color: var(--orange-strong); margin-bottom: 10px; }
+/* Le stage */
+.stage-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: clamp(24px, 5vw, 56px); align-items: start; }
+.stage-photo { margin: 0; }
+.stage-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
+.stage-photo figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); margin-top: 8px; }
+.cases { display: grid; gap: 0; border-top: 2px solid var(--ink); padding: 0; margin: 0; }
+.cases li { list-style: none; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.cases b { font-family: var(--f-mono); font-size: 0.78rem; color: var(--orange-strong); padding-top: 3px; }
 .cases p { font-size: var(--step-1); font-weight: 500; line-height: 1.4; }
-.cases ul, .bikes { padding: 0; margin: 0; }
-@media (max-width: 760px) { .cases { grid-template-columns: 1fr; } .cases li, .cases li + li { padding: 18px 0; border-right: 0; border-bottom: 1px solid var(--line); } }
-.bikes-wrap { margin-top: 40px; display: grid; gap: 14px; }
+@media (max-width: 860px) { .stage-grid { grid-template-columns: minmax(0, 1fr); } .stage-photo { max-width: 420px; } }
+.bikes-wrap { margin-top: clamp(36px, 5vw, 56px); display: grid; gap: 16px; }
 .bikes-wrap h3 { font-size: var(--step-2); }
-.bikes { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
-.bikes li { font-weight: 600; font-size: 0.92rem; padding: 7px 12px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); }
-.bikes li.more { border-style: dashed; color: var(--muted); }
+.bikes-wrap > p { color: var(--muted); max-width: 62ch; }
+.bike-group { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 12px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 12px; }
+.bike-group span { font-family: var(--f-mono); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.bikes { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.bikes li { font-weight: 600; font-size: 0.92rem; padding: 6px 12px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--bg); }
+@media (max-width: 640px) { .bike-group { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
 
 /* Roadbook */
 .roadbook { list-style: none; padding: 0; margin: 0; border: 2px solid var(--on-forest); border-radius: 4px; }
-.rb-row { display: grid; grid-template-columns: 64px 92px 84px minmax(0, 1fr); border-top: 1px solid color-mix(in srgb, var(--on-forest) 28%, transparent); }
+.rb-row { display: grid; grid-template-columns: 64px 104px 84px minmax(0, 1fr); border-top: 1px solid color-mix(in srgb, var(--on-forest) 28%, transparent); }
 .rb-row:first-child { border-top: 0; }
 .rb-row > * { padding: 14px 16px; border-left: 1px solid color-mix(in srgb, var(--on-forest) 28%, transparent); min-width: 0; }
 .rb-row > *:first-child { border-left: 0; }
@@ -164,6 +153,8 @@ p { margin: 0; }
 .rb-text h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; }
 .rb-text p { color: var(--on-forest-muted); }
 .rb-row.is-break .rb-text h3 { color: var(--sand); }
+.rb-row.is-key { background: color-mix(in srgb, var(--orange) 16%, transparent); }
+.rb-row.is-key .rb-text h3 { color: var(--orange); }
 .rb-note { margin-top: 14px; font-family: var(--f-mono); font-size: 0.78rem; color: var(--on-forest-muted); }
 @media (max-width: 640px) {
   .rb-row { grid-template-columns: 52px minmax(0, 1fr); }
@@ -173,25 +164,31 @@ p { margin: 0; }
   .rb-row .rb-text { grid-column: 2; padding-top: 4px; }
 }
 
-/* Niveaux */
-.levels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.level { display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 24px; }
-.level header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.level h3 { font-size: 2rem; }
-.level .status { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); white-space: nowrap; }
-.level .status.soon { background: color-mix(in srgb, var(--muted) 16%, transparent); color: var(--muted); }
-.level .who { font-weight: 600; font-size: var(--step-1); line-height: 1.35; }
-.level ul { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 6px; }
-.level footer { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px dashed var(--line); padding-top: 14px; font-variant-numeric: tabular-nums; }
-.level .price { font-family: var(--f-display); font-weight: 900; font-size: 2rem; }
-.level .dur { font-family: var(--f-mono); font-size: 0.85rem; color: var(--muted); }
-.level.is-soon { background: transparent; border-style: dashed; }
-@media (max-width: 900px) { .levels { grid-template-columns: 1fr; } }
+/* Formules */
+.offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.offer { display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.offer header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 10px; }
+.offer h3 { font-size: 2rem; }
+.offer .status { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; background: color-mix(in srgb, var(--forest) 10%, transparent); color: var(--forest); white-space: nowrap; }
+.offer .who { font-weight: 600; font-size: var(--step-1); line-height: 1.35; }
+.offer ul { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 6px; }
+.prices { display: grid; gap: 4px; border-top: 1px dashed var(--line); padding-top: 14px; font-variant-numeric: tabular-nums; }
+.prices div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.prices dt { font-size: 0.9rem; color: var(--muted); }
+.prices dd { margin: 0; font-family: var(--f-display); font-weight: 900; font-size: 1.9rem; line-height: 1.05; }
+.offers-more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
+.offer--small { grid-template-rows: auto 1fr auto; background: transparent; border-style: dashed; }
+.offer--small h3 { font-size: 1.6rem; }
+.offer--small p { color: var(--muted); }
+.offer--small .btn { justify-self: start; padding: 9px 16px; }
+@media (max-width: 960px) { .offers { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 700px) { .offers-more { grid-template-columns: minmax(0, 1fr); } }
+.offer, .offer > * { min-width: 0; }
 
 /* Vidéos */
 .reels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
 .reel { display: grid; gap: 10px; align-content: start; }
-.reel video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius); background: #0d140e; }
+.reel video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius); background: #26301f; }
 .reel h3 { font-size: 1.3rem; }
 .reel p { font-size: 0.92rem; color: var(--muted); }
 .reel .len { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); }
@@ -201,56 +198,67 @@ p { margin: 0; }
 }
 
 /* Terrain */
-.terrain { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
-.terrain-photos { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 12px; }
+.terrain { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+.terrain-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0; }
 .terrain-photos figure { margin: 0; }
+.terrain-photos figure:first-child { grid-column: 1 / -1; }
 .terrain-photos img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
+.terrain-photos figure:first-child img { aspect-ratio: 3 / 2; }
 .terrain-photos figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); margin-top: 6px; }
-.spec { display: grid; gap: 0; margin: 0; border-top: 2px solid var(--ink); }
-.spec div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.spec dt { font-family: var(--f-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-top: 2px; }
-.spec dd { margin: 0; font-weight: 500; }
-.ateliers { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 8px; }
+.zones { display: grid; gap: 22px; }
+.zones h3 { font-size: 1.5rem; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.ateliers { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
 .ateliers li { display: flex; gap: 10px; align-items: baseline; }
 .ateliers li::before { content: ""; flex: none; width: 10px; height: 10px; background: var(--orange); transform: rotate(45deg) translateY(-1px); }
-.ateliers li.unsure::before { background: transparent; border: 2px solid var(--muted); }
-@media (max-width: 860px) { .terrain { grid-template-columns: 1fr; } }
-@media (max-width: 480px) { .spec div { grid-template-columns: 1fr; gap: 2px; } }
+.surfaces { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.surfaces li { font-weight: 600; font-size: 0.92rem; padding: 6px 12px; border-radius: 999px; background: var(--surface); border: 1.5px solid var(--line); }
+.surfaces li small { font-weight: 500; color: var(--muted); }
+.spec { display: grid; margin: 0; border-top: 2px solid var(--ink); }
+.spec div { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.spec dt { font-family: var(--f-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-top: 2px; }
+.spec dd { margin: 0; font-weight: 500; }
+.insta { font-weight: 600; }
+@media (max-width: 900px) { .terrain { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 480px) { .spec div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
 
 /* Moniteur */
 .coach { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
-.coach-photo { position: relative; }
+.coach-photo { margin: 0; }
 .coach-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
+.coach-photo figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); margin-top: 8px; }
 .coach h2 { font-size: var(--step-3); margin-top: 10px; }
-.coach .bio { font-size: var(--step-1); margin-top: 18px; max-width: 56ch; color: var(--on-forest-muted); }
-.coach .bio + .bio { margin-top: 12px; }
-.coach .cred { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
-.coach .cred span { font-family: var(--f-mono); font-size: 0.78rem; border: 1px solid color-mix(in srgb, var(--on-forest) 35%, transparent); border-radius: 3px; padding: 5px 9px; }
-.coach-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 26px; }
-.coach-strip img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px; }
-@media (max-width: 860px) { .coach { grid-template-columns: 1fr; } .coach-photo { max-width: 420px; } }
+.coach .role { font-family: var(--f-mono); font-size: 0.9rem; font-weight: 600; margin-top: 12px; }
+.coach .bio { font-size: var(--step-1); margin-top: 18px; max-width: 58ch; color: var(--muted); }
+.coach .cred { margin-top: 18px; }
+.coach-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: clamp(32px, 5vw, 56px); border-top: 2px solid var(--ink); }
+.coach-points div { padding: 18px 22px 0 0; }
+.coach-points div + div { padding-left: 22px; border-left: 1px solid var(--line); }
+.coach-points h3 { font-size: 1.4rem; margin-bottom: 8px; }
+.coach-points p { color: var(--muted); }
+@media (max-width: 860px) { .coach { grid-template-columns: minmax(0, 1fr); } .coach-photo { max-width: 420px; } .coach-points { grid-template-columns: minmax(0, 1fr); } .coach-points div, .coach-points div + div { padding: 16px 0; border-left: 0; border-bottom: 1px solid var(--line); } }
 
 /* Voyage */
 .voyage { position: relative; color: #f4f1e8; overflow: hidden; background: #3d2414; }
 .voyage video, .voyage .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .voyage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,14,8,.78) 0%, rgba(20,14,8,.45) 55%, rgba(20,14,8,.15) 100%); }
 .voyage .wrap { position: relative; z-index: 1; padding-block: clamp(72px, 12vw, 150px); }
-.voyage h2 { font-size: var(--step-3); max-width: 14ch; }
-.voyage p { font-size: var(--step-1); max-width: 46ch; margin-top: 16px; color: #e8e1d2; }
+.voyage h2 { font-size: var(--step-3); max-width: 15ch; }
+.voyage p { font-size: var(--step-1); max-width: 48ch; margin-top: 16px; color: #e8e1d2; }
 .voyage .eyebrow { color: #f0c58f; }
 .voyage .btn { margin-top: 26px; }
 
 /* Équipement */
 .kit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 4vw, 48px); }
 .kit h3 { font-size: var(--step-2); padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+.kit-intro { color: var(--muted); margin: 12px 0 4px; }
 .kit ul { list-style: none; padding: 0; margin: 0; }
 .kit li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
 .kit li span:first-child { min-width: 0; }
 .req { flex: none; font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 .req.must { color: var(--orange-strong); }
 .req.nice { color: var(--muted); }
-.kit-note { margin-top: 24px; color: var(--muted); }
-@media (max-width: 760px) { .kit { grid-template-columns: 1fr; } }
+.kit-quote { margin-top: 28px; font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.05; max-width: 30ch; }
+@media (max-width: 760px) { .kit { grid-template-columns: minmax(0, 1fr); } }
 
 /* Dates */
 .dates-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 40px); align-items: start; }
@@ -270,16 +278,19 @@ p { margin: 0; }
 .gift { background: var(--forest); color: var(--on-forest); border-radius: var(--radius); padding: 26px; display: grid; gap: 14px; position: sticky; top: 96px; }
 .gift h3 { font-size: 2.2rem; }
 .gift p { color: var(--on-forest-muted); }
+.gift .eyebrow { color: var(--sand); }
 .gift .price { font-family: var(--f-display); font-weight: 900; font-size: 3rem; line-height: 1; color: var(--sand); }
+.gift .price small { font-size: 1.2rem; }
 .dates-note { margin-top: 16px; font-size: 0.9rem; color: var(--muted); }
-@media (max-width: 900px) { .dates-grid { grid-template-columns: 1fr; } .gift { position: static; } }
-@media (max-width: 520px) { .session { grid-template-columns: 84px minmax(0, 1fr); } .session .btn { grid-column: 1 / -1; } .s-date b { font-size: 1.8rem; } }
+@media (max-width: 900px) { .dates-grid { grid-template-columns: minmax(0, 1fr); } .gift { position: static; } }
+@media (max-width: 520px) { .session { grid-template-columns: 92px minmax(0, 1fr); } .session .btn { grid-column: 1 / -1; } .s-date b { font-size: 1.8rem; } }
 
 /* Formulaire */
 .form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(24px, 5vw, 64px); align-items: start; }
 .form-aside p { color: var(--muted); }
 .form-aside p + p { margin-top: 12px; }
-.contact-lines { margin-top: 22px; display: grid; gap: 8px; font-family: var(--f-mono); font-size: 0.88rem; }
+.contact-lines { margin-top: 22px; display: grid; gap: 8px; font-family: var(--f-mono); font-size: 0.88rem; justify-items: start; }
+.contact-lines a, .foot-contact a { color: inherit; text-underline-offset: 3px; }
 form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); }
 .field { display: grid; gap: 6px; min-width: 0; }
 .field.full { grid-column: 1 / -1; }
@@ -287,7 +298,7 @@ label, legend { font-weight: 600; font-size: 0.92rem; }
 input, select, textarea { font: 400 1rem var(--f-body); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 4px; padding: 11px 12px; width: 100%; }
 textarea { min-height: 96px; resize: vertical; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px color-mix(in srgb, var(--orange) 25%, transparent); }
-fieldset { border: 0; padding: 0; margin: 0; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .seg { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 .seg label { position: relative; font-weight: 600; font-size: 0.9rem; }
 .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -304,8 +315,8 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .confirm dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 6px 0 0; font-size: 0.92rem; }
 .confirm dt { color: var(--muted); }
 .confirm dd { margin: 0; font-weight: 600; }
-@media (max-width: 860px) { .form-grid { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { form { grid-template-columns: 1fr; } }
+@media (max-width: 860px) { .form-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { form { grid-template-columns: minmax(0, 1fr); } }
 
 /* FAQ */
 .faq { max-width: 860px; border-top: 2px solid var(--ink); }
@@ -314,31 +325,36 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: "+"; position: absolute; right: 4px; top: 12px; font-family: var(--f-display); font-size: 2rem; font-weight: 800; color: var(--orange-strong); }
 .faq details[open] summary::after { content: "–"; }
-.faq details p { padding: 0 0 20px; color: var(--muted); max-width: 70ch; }
+.faq .answer { padding: 0 0 20px; color: var(--muted); max-width: 70ch; display: grid; gap: 10px; }
+.policy { border-collapse: collapse; width: 100%; max-width: 560px; font-size: 0.95rem; }
+.policy td { padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.policy td:first-child { font-family: var(--f-mono); font-size: 0.85rem; white-space: nowrap; color: var(--ink); }
+.policy-wrap { overflow-x: auto; }
 
 /* Pied de page */
 .foot { background: var(--forest); color: var(--on-forest-muted); padding-block: 48px; }
 .foot .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 28px; align-items: center; }
 .foot img { height: 92px; width: auto; }
 .foot strong { color: var(--on-forest); font-family: var(--f-display); font-size: 1.6rem; text-transform: uppercase; display: block; }
+.foot-contact { margin-top: 6px; font-family: var(--f-mono); font-size: 0.85rem; }
 .foot nav { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.9rem; }
 .foot a { color: var(--on-forest-muted); }
-@media (max-width: 760px) { .foot .wrap { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .foot .wrap { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
-<div class="draftbar">Maquette V1 · dates, niveaux, tarifs et textes à valider · aucune réservation n'est enregistrée</div>
+<div class="draftbar">Maquette V2 · textes d'Adrien intégrés · éléments surlignés à valider · aucune réservation n'est enregistrée</div>
 
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Trail Base Camp, retour en haut">
       <img src="media/logo.png" alt="" width="567" height="640">
-      <div><span>Trail Base Camp</span><small>STAGES TRAIL &amp; MAXI-TRAIL</small></div>
+      <div><span>Trail Base Camp</span><small>STAGES TRAIL &amp; SCRAMBLER</small></div>
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="#stage">Le stage</a>
       <a href="#programme">Programme</a>
-      <a href="#niveaux">Niveaux</a>
+      <a href="#formules">Formules</a>
       <a href="#terrain">Terrain</a>
       <a href="#moniteur">Moniteur</a>
       <a href="#equipement">Équipement</a>
@@ -350,7 +366,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
   <nav class="mobile-nav" id="mobileNav" aria-label="Sections" hidden>
     <div class="wrap">
       <a href="#stage">Le stage</a><a href="#programme">Programme</a>
-      <a href="#niveaux">Niveaux</a><a href="#consignes">Vidéos</a>
+      <a href="#formules">Formules</a><a href="#consignes">Vidéos</a>
       <a href="#terrain">Terrain</a><a href="#moniteur">Moniteur</a>
       <a href="#equipement">Équipement</a><a href="#dates">Dates et tarifs</a>
       <a href="#faq">FAQ</a><a href="#reserver">Contact</a>
@@ -362,24 +378,24 @@ fieldset { border: 0; padding: 0; margin: 0; }
   <section class="hero">
     <div class="wrap">
       <div>
-        <p class="eyebrow">Stages trail &amp; maxi-trail · Vert-Saint-Denis (77)</p>
-        <h1>Sors ton maxi-trail <em>du bitume.</em></h1>
-        <p class="lead">Une journée de pilotage tout-terrain sur ta propre moto, à 40 km de Paris. Six pilotes au maximum, un moniteur, et des ateliers qui vont du freinage sur gravier au franchissement.</p>
+        <p class="eyebrow">Stages trail, maxi-trail &amp; scrambler · Vert-Saint-Denis (77)</p>
+        <h1>Sors ton trail <em>du bitume.</em></h1>
+        <p class="lead">Des ateliers sur un terrain privé le matin, 70 km de rando l'après-midi, sur ta propre moto. Trail, maxi-trail ou scrambler, de 300 à 1300 cm³, à 40 km de Paris.</p>
         <div class="ctas">
           <a class="btn btn--primary" href="#dates">Voir les prochaines dates</a>
-          <a class="btn btn--ghost" href="#programme">Le programme de la journée</a>
+          <a class="btn btn--ghost" href="#formules">Les formules</a>
         </div>
         <dl class="facts">
-          <div><dt>Durée</dt><dd>1 journée</dd></div>
+          <div><dt>Journée</dt><dd>8h30 – 17h</dd></div>
           <div><dt>Moto</dt><dd>La tienne</dd></div>
           <div><dt>Groupe</dt><dd>6 pilotes max</dd></div>
-          <div><dt>Tarif</dt><dd>249 €</dd></div>
+          <div><dt>Tarif</dt><dd>Dès 119 €</dd></div>
         </dl>
       </div>
       <figure class="hero-media">
         <span class="tag">Filmé sur le terrain</span>
-        <video id="heroVideo" src="media/v-franchissement.mp4" poster="media/v-franchissement.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Le moniteur franchit une marche en planches sur un maxi-trail"></video>
-        <figcaption>Consigne du moniteur : le franchissement. Vert-Saint-Denis.</figcaption>
+        <video id="heroVideo" src="media/v-franchissement.mp4" poster="media/v-franchissement.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Démonstration de franchissement d'une marche en planches sur un maxi-trail"></video>
+        <figcaption>La démo du franchissement, sur le terrain de Fast Off Road.</figcaption>
       </figure>
     </div>
   </section>
@@ -388,27 +404,34 @@ fieldset { border: 0; padding: 0; margin: 0; }
     <div class="wrap"><p><span>Apprends.</span> <span>Progresse.</span> <span>Prends confiance.</span></p></div>
   </div>
 
-  <section class="band" id="stage">
+  <section class="band band--surface" id="stage">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Le stage</p>
-        <h2>Ton trail sait faire bien plus que la route.</h2>
-        <p>Une école dédiée aux trails et maxi-trails. Tu viens avec ta moto, tu repars en sachant t'en servir hors bitume, en sécurité et sans te crisper.</p>
+      <div class="stage-grid">
+        <div>
+          <div class="section-head">
+            <p class="eyebrow">Le stage</p>
+            <h2>Ta moto de tous les jours peut aller bien plus loin.</h2>
+            <p>Pas besoin d'une machine d'enduro pour goûter au tout-terrain. Avec de bons pneus, des protections et la bonne technique, les pistes s'ouvrent à toi.</p>
+          </div>
+          <ul class="cases">
+            <li><b>SI…</b><p>Tu as acheté un trail pour l'aventure, et il n'a jamais quitté le goudron.</p></li>
+            <li><b>SI…</b><p>Un chemin de gravier, une ornière, une descente, et tu te crispes sur le guidon.</p></li>
+            <li><b>SI…</b><p>Tu prépares un road trip et tu veux arriver prêt sur la piste.</p></li>
+          </ul>
+        </div>
+        <figure class="stage-photo">
+          <img src="media/terrain-3.jpg" alt="Un maxi-trail franchit une marche en planches sur le terrain">
+          <figcaption>Atelier franchissement, Vert-Saint-Denis</figcaption>
+        </figure>
       </div>
-      <ul class="cases">
-        <li><b>SI…</b><p>Tu as acheté un trail pour l'aventure, et il n'a jamais quitté le goudron.</p></li>
-        <li><b>SI…</b><p>Un chemin de gravier, une ornière, une descente : avec plus de 200 kg sous toi, tu te crispes.</p></li>
-        <li><b>SI…</b><p>Tu prépares un voyage au Maroc, dans les Balkans ou en Islande, et tu veux arriver prêt.</p></li>
-      </ul>
+
       <div class="bikes-wrap">
-        <h3>Motos bienvenues</h3>
-        <ul class="bikes">
-          <li>BMW R 1300 GS</li><li>BMW GS Adventure</li><li>BMW F 900 GS</li>
-          <li>Yamaha Ténéré 700</li><li>Honda Africa Twin</li><li>Honda Transalp</li>
-          <li>KTM 890 / 1290 Adventure</li><li>Triumph Tiger</li><li>Ducati Multistrada</li>
-          <li>Ducati DesertX</li><li>Suzuki V-Strom</li><li>Aprilia Tuareg</li>
-          <li class="more">et tous les trails</li>
-        </ul>
+        <h3>Motos bienvenues : de 300 à 1300 cm³</h3>
+        <p>Tout type et toute motorisation de trail et de scrambler. Quelques exemples :</p>
+        <div class="bike-group"><span>Petits trails</span><ul class="bikes"><li>Honda CRF300L</li><li>BMW G 310 GS</li><li>KTM 390 Adventure</li><li>Royal Enfield Himalayan 450</li></ul></div>
+        <div class="bike-group"><span>Trails moyens</span><ul class="bikes"><li>Yamaha Ténéré 700</li><li>Honda Transalp 750</li><li>Aprilia Tuareg 660</li><li>KTM 890 Adventure</li><li>BMW F 900 GS</li><li>Suzuki V-Strom 800DE</li><li>Triumph Tiger 900</li></ul></div>
+        <div class="bike-group"><span>Maxi-trails</span><ul class="bikes"><li>BMW R 1300 GS</li><li>Honda Africa Twin</li><li>KTM 1290 Adventure</li><li>Triumph Tiger 1200</li><li>Ducati Multistrada</li></ul></div>
+        <div class="bike-group"><span>Scramblers</span><ul class="bikes"><li>Triumph Scrambler 400 X</li><li>Triumph Scrambler 1200</li><li>Ducati Scrambler</li></ul></div>
       </div>
     </div>
   </section>
@@ -416,55 +439,73 @@ fieldset { border: 0; padding: 0; margin: 0; }
   <section class="band band--forest" id="programme">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Programme · le roadbook de ta journée</p>
-        <h2>Le déroulé de la journée</h2>
-        <p>On commence à l'arrêt, on finit sur le parcours. Chaque atelier s'appuie sur le précédent.</p>
+        <p class="eyebrow">Programme · la journée Découverte</p>
+        <h2>Le terrain le matin, la rando l'après-midi.</h2>
+        <p>Trois zones éducatives pour poser les bases, puis 70 km de routes et de chemins pour les mettre en pratique. Retour entre 16h30 et 17h.</p>
       </div>
       <ol class="roadbook" id="roadbook"></ol>
-      <p class="rb-note">Horaires indicatifs, adaptés au groupe et à la météo. <span class="todo">Horaires et déjeuner à confirmer</span></p>
+      <p class="rb-note">Horaires indicatifs, adaptés au groupe et à la météo. <span class="todo">Déjeuner : inclus ou non, à confirmer</span></p>
     </div>
   </section>
 
-  <section class="band" id="niveaux">
+  <section class="band" id="formules">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Niveaux</p>
-        <h2>Trois niveaux, un seul principe : ton rythme.</h2>
-        <p>Tu choisis ton niveau à la réservation. Si tu hésites, prends Découverte : le moniteur ajuste sur place.</p>
+        <p class="eyebrow">Formules</p>
+        <h2>En groupe ou en coaching perso.</h2>
+        <p>Chaque formule existe en petit groupe (6 pilotes maximum) ou en coaching individuel. Si tu hésites, commence par la Découverte.</p>
       </div>
-      <div class="levels">
-        <article class="level">
-          <header><h3>Découverte</h3><span class="status">Ouvert</span></header>
-          <p class="who">Tu débutes hors bitume, ou presque.</p>
+      <div class="offers">
+        <article class="offer">
+          <header><h3>Découverte</h3><span class="status">Journée</span></header>
+          <p class="who">Tu débutes hors bitume, ou tu reprends après une pause.</p>
           <ul>
-            <li>Position debout et position cross</li>
-            <li>Maniabilité à basse vitesse</li>
-            <li>Freinage sur terrain meuble</li>
-            <li>Relever ta moto sans te blesser</li>
+            <li>Ateliers sur les 3 zones éducatives</li>
+            <li>Rando de 70 km l'après-midi</li>
+            <li>De 8h30 à 16h30–17h</li>
           </ul>
-          <footer><span class="price">249 €</span><span class="dur">1 jour · ta moto</span></footer>
+          <dl class="prices">
+            <div><dt>En groupe</dt><dd>269 €</dd></div>
+            <div><dt>Coaching perso</dt><dd>499 €</dd></div>
+          </dl>
         </article>
-        <article class="level">
-          <header><h3>Progression</h3><span class="status">Ouvert</span></header>
-          <p class="who">Tu roules déjà sur les chemins et tu veux de la méthode.</p>
+        <article class="offer">
+          <header><h3>Progression</h3><span class="status">½ journée</span></header>
+          <p class="who">Tu as les bases et tu veux aller plus loin.</p>
           <ul>
-            <li>Franchissements de marches et de planches</li>
-            <li>Freinage dégressif et regard</li>
-            <li>Enchaînements sur parcours</li>
-            <li>Corrections individuelles</li>
+            <li>Piste de 900 m avec bosses</li>
+            <li>Single en forêt, décaissés, passage de gué</li>
+            <li>Grandes montées en prairie</li>
           </ul>
-          <footer><span class="price">249 €</span><span class="dur">1 jour · ta moto</span></footer>
+          <dl class="prices">
+            <div><dt>En groupe</dt><dd>119 €</dd></div>
+            <div><dt>Coaching perso</dt><dd>269 €</dd></div>
+          </dl>
         </article>
-        <article class="level is-soon">
-          <header><h3>Prépa voyage</h3><span class="status soon">Bientôt</span></header>
-          <p class="who">Tu pars loin et tu veux arriver prêt.</p>
+        <article class="offer">
+          <header><h3>Prépa voyage</h3><span class="status">Week-end</span></header>
+          <p class="who">Tu prépares un road trip et tu veux le tester pour de vrai.</p>
           <ul>
-            <li>Pilotage moto chargée</li>
-            <li>Lecture de terrain et de piste</li>
-            <li>Mécanique de bord</li>
-            <li>Gérer la fatigue sur plusieurs jours</li>
+            <li>600 à 700 km sur le week-end</li>
+            <li>70 % de routes, 30 % de pistes</li>
+            <li>9 places</li>
+            <li>Hébergement et repas <span class="todo">à préciser</span></li>
           </ul>
-          <footer><span class="price">À venir</span><span class="dur">2 jours</span></footer>
+          <dl class="prices">
+            <div><dt>Par pilote</dt><dd>700 à 800 €</dd></div>
+          </dl>
+        </article>
+      </div>
+      <div class="offers-more">
+        <article class="offer offer--small">
+          <header><h3>Voyages guidés</h3><span class="status">À venir</span></header>
+          <p>Portugal, Maroc : des week-ends évasion pour mettre tes acquis en pratique. Tu roules, Adrien s'occupe du reste.</p>
+          <a class="btn btn--ghost" href="#reserver" data-type="question" data-msg="Je veux être prévenu des prochains voyages guidés (Portugal, Maroc).">Être prévenu</a>
+        </article>
+        <article class="offer offer--small">
+          <header><h3>Enduro</h3><span class="status">Partenaire</span></header>
+          <p>Envie de goûter à l'enduro ? On t'oriente vers notre partenaire Fast Off Road, sur le même terrain. <span class="todo">Détails du partenariat à venir</span></p>
+          <a class="btn btn--ghost" href="#reserver" data-type="question" data-msg="Je suis intéressé par l'enduro avec Fast Off Road.">Se renseigner</a>
         </article>
       </div>
     </div>
@@ -474,7 +515,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Vidéos · les consignes du moniteur</p>
-        <h2>Ce que tu vas travailler, en vrai.</h2>
+        <h2>Consigne, démo, à toi.</h2>
         <p>Des extraits tournés pendant les stages, sur le terrain de Vert-Saint-Denis. Le son démarre quand tu lances la vidéo.</p>
       </div>
       <div class="reels" id="reels"></div>
@@ -484,49 +525,78 @@ fieldset { border: 0; padding: 0; margin: 0; }
   <section class="band" id="terrain">
     <div class="wrap terrain">
       <div class="terrain-photos">
-        <figure><img src="media/terrain-1.jpg" alt="Aire de gravier du terrain, un pilote sur le talus en arrière-plan"><figcaption>La zone de maniabilité</figcaption></figure>
-        <figure><img src="media/terrain-3.jpg" alt="Un maxi-trail franchit une marche en planches"><figcaption>L'atelier franchissement</figcaption></figure>
+        <figure><img src="media/terrain-vue.jpg" alt="Vue d'ensemble du terrain : bosses, pistes et points d'eau"><figcaption>Vue d'ensemble : bosses, pistes et gué</figcaption></figure>
+        <figure><img src="media/terrain-ornieres.jpg" alt="Ornières dans la terre au soleil couchant"><figcaption>Terre et ornières</figcaption></figure>
+        <figure><img src="media/terrain-1.jpg" alt="Zone de gravier pour les ateliers de maniabilité"><figcaption>Zone éducative</figcaption></figure>
       </div>
       <div>
         <div class="section-head">
-          <p class="eyebrow">Le terrain · 48,57° N · 2,62° E</p>
-          <h2>Un terrain privé à Vert-Saint-Denis.</h2>
-          <p>À 10 minutes de Melun, à 40 km de Paris. Pas de voiture en face, pas de randonneur au détour du chemin : tu roules à ton rythme.</p>
+          <p class="eyebrow">Le terrain · Fast Off Road</p>
+          <h2>De la terre au gué, tout est sur place.</h2>
+          <p>Toute l'année, sur le terrain privé de notre partenaire Fast Off Road, à 10 minutes de Melun et 40 km de Paris.</p>
         </div>
-        <dl class="spec">
-          <div><dt>Commune</dt><dd>Vert-Saint-Denis (77240), Seine-et-Marne</dd></div>
-          <div><dt>Surface</dt><dd>10 hectares <span class="todo">à confirmer</span></dd></div>
-          <div><dt>Accès</dt><dd>Adresse exacte envoyée avec la confirmation de réservation</dd></div>
-          <div><dt>Stationnement</dt><dd>Sur place <span class="todo">à confirmer</span></dd></div>
-        </dl>
-        <ul class="ateliers">
-          <li>Zone de maniabilité sur gravier</li>
-          <li>Marches et planches de franchissement</li>
-          <li>Talus et pistes en terre</li>
-          <li class="unsure">Sable, montées et dévers <span class="todo">à confirmer</span></li>
-        </ul>
+        <div class="zones">
+          <div>
+            <h3>3 zones éducatives</h3>
+            <ul class="ateliers">
+              <li>Zone premier tour de roue</li>
+              <li>Zone ovale</li>
+              <li>Petit circuit de franchissement</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Zone enduro</h3>
+            <ul class="ateliers">
+              <li>Parcours de 900 m de pistes avec bosses</li>
+              <li>Parcours en forêt : single, décaissés, passage de gué</li>
+              <li>2 prairies avec de grandes montées</li>
+              <li>Circuit cross : plateau, bosses, virage relevé</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Revêtements</h3>
+            <ul class="surfaces">
+              <li>Terre</li><li>Sable</li><li>Gravillons</li><li>Pierres</li>
+              <li>Boue <small>selon saison</small></li><li>Gué et eau <small>selon saison</small></li><li>Herbe <small>selon saison</small></li>
+            </ul>
+          </div>
+          <dl class="spec">
+            <div><dt>Commune</dt><dd>Vert-Saint-Denis (77240), Seine-et-Marne</dd></div>
+            <div><dt>Accès</dt><dd>Adresse exacte envoyée avec la confirmation</dd></div>
+          </dl>
+          <p><a class="insta" href="#top">Plus de photos et vidéos sur Instagram →</a> <span class="todo">lien à venir</span></p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="band band--forest" id="moniteur">
-    <div class="wrap coach">
-      <div class="coach-photo">
-        <img src="media/moniteur.jpg" alt="Portrait du moniteur, en tenue tout-terrain, devant sa moto dans le désert">
-      </div>
-      <div>
-        <p class="eyebrow">Ton moniteur</p>
-        <h2>Sylvain <span class="todo">nom à confirmer</span></h2>
-        <p class="bio">Pilote tout-terrain, il roule en enduro jusque dans les dunes du Maroc. Sur le terrain, il explique, il montre, puis il te regarde faire et corrige.</p>
-        <p class="bio">Sa méthode tient en trois temps, et tu la vois dans les vidéos : la consigne, la démo, puis à toi de jouer.</p>
-        <div class="cred">
-          <span>Diplôme : à préciser</span>
-          <span>Carte professionnelle n° : à préciser</span>
+  <section class="band band--surface" id="moniteur">
+    <div class="wrap">
+      <div class="coach">
+        <figure class="coach-photo">
+          <img src="media/transalp-circuit.jpg" alt="La Honda Transalp 750 d'Adrien à l'entrée du circuit moto">
+          <figcaption>La Transalp 750 d'Adrien, à l'entrée du terrain <span class="todo">portrait d'Adrien à ajouter</span></figcaption>
+        </figure>
+        <div>
+          <p class="eyebrow">Ton moniteur</p>
+          <h2>Adrien, moniteur trail &amp; scrambler</h2>
+          <p class="role">Pilote de Transalp 750 · encadrement et road trips guidés</p>
+          <p class="bio">Toute l'année, je t'accueille sur le terrain privé de notre partenaire Fast Off Road. Tu apprends au fil d'ateliers ludiques, avec un fil conducteur clair : consigne, démonstration, mise en pratique, puis axes d'amélioration personnalisés.</p>
+          <p class="cred"><span class="todo">Diplôme d'encadrement moto et n° de carte professionnelle à afficher</span></p>
         </div>
-        <div class="coach-strip">
-          <img src="media/desert-dune-pilote.jpg" alt="Le moniteur sur sa moto au sommet d'une dune">
-          <img src="media/desert-guidon.jpg" alt="Vue depuis le guidon sur une mer de dunes">
-          <img src="media/desert-deux-motos.jpg" alt="Deux motos d'enduro garées sur une crête de dune">
+      </div>
+      <div class="coach-points">
+        <div>
+          <h3>Chaque moto a ses atouts</h3>
+          <p>De la 450 à la 1300, puissance, poids, hauteur de selle, garde au sol, suspensions et freins changent tout. Il n'y a pas de mauvaise moto, il y a une moto qu'il faut apprendre à connaître. Je t'aide à jouer de ses points forts et à contourner ses faiblesses.</p>
+        </div>
+        <div>
+          <h3>Le scrambler, l'esprit d'aventure</h3>
+          <p>C'est la moto de route qu'on emmène sur la piste, l'ancêtre de nos trails modernes. Sa faible garde au sol et ses suspensions routières demandent de lire le terrain : c'est exactement ce que je t'apprends.</p>
+        </div>
+        <div>
+          <h3>Une pédagogie qui rassure</h3>
+          <p>Issue de la préparation physique, ma méthode avance à ton rythme. La chute fait partie de l'apprentissage : tu apprends à relever ta moto, on comprend ce qui s'est passé, et on repart sans blocage.</p>
         </div>
       </div>
     </div>
@@ -536,10 +606,10 @@ fieldset { border: 0; padding: 0; margin: 0; }
     <img class="poster" src="media/v-dunes.jpg" alt="">
     <video id="bandVideo" src="media/v-dunes.mp4" poster="media/v-dunes.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video>
     <div class="wrap">
-      <p class="eyebrow">Après le stage</p>
-      <h2 id="voyageTitle">Le voyage commence sur le gravier.</h2>
-      <p>Le Maroc, les Balkans, les pistes d'Islande. Avant d'y aller chargé, tu apprends ici à maîtriser ta moto quand le sol bouge.</p>
-      <a class="btn btn--primary" href="#reserver" data-type="question" data-msg="Je veux être prévenu de l'ouverture de la Prépa voyage.">Être prévenu de la Prépa voyage</a>
+      <p class="eyebrow">Prépa voyage et road trips</p>
+      <h2 id="voyageTitle">Le voyage commence sur le terrain.</h2>
+      <p>Un week-end de 600 à 700 km pour tester tes acquis, puis des road trips guidés au Portugal et au Maroc. Tu roules, Adrien s'occupe du reste.</p>
+      <a class="btn btn--primary" href="#reserver" data-type="question" data-msg="Je veux être prévenu des prochains départs (Prépa voyage, Portugal, Maroc).">Être prévenu des prochains départs</a>
     </div>
   </section>
 
@@ -547,33 +617,35 @@ fieldset { border: 0; padding: 0; margin: 0; }
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Équipement</p>
-        <h2>Ce qu'il faut prévoir</h2>
-        <p>Tu reçois cette liste par e-mail avec ta confirmation, et un rappel deux jours avant le stage.</p>
+        <h2>Ta protection, c'est ton assurance.</h2>
+        <p>La loi impose un casque et des gants. Nous, on va plus loin : en tout-terrain, la chute fait partie de l'apprentissage. Autant qu'elle ne laisse aucune trace.</p>
       </div>
       <div class="kit">
         <div>
           <h3>Pour toi</h3>
           <ul>
-            <li><span>Casque intégral ou cross, avec lunettes ou écran</span><span class="req must">Obligatoire</span></li>
-            <li><span>Bottes montantes, idéalement tout-terrain</span><span class="req must">Obligatoire</span></li>
-            <li><span>Gants</span><span class="req must">Obligatoire</span></li>
-            <li><span>Veste et pantalon avec protections aux coudes, épaules et genoux</span><span class="req must">Obligatoire</span></li>
-            <li><span>Protection dorsale</span><span class="req nice">Recommandé</span></li>
-            <li><span>Poche à eau ou gourde</span><span class="req nice">Recommandé</span></li>
+            <li><span>Casque adventure (ADV)</span><span class="req must">Obligatoire</span></li>
+            <li><span>Gants adaptés</span><span class="req must">Obligatoire</span></li>
+            <li><span>Protections intégrales : coudes, épaules, torse et dos</span><span class="req must">Obligatoire</span></li>
+            <li><span>Orthèses de genoux</span><span class="req must">Obligatoire</span></li>
+            <li><span>Bottes adventure (ADV)</span><span class="req must">Obligatoire</span></li>
+            <li><span>Short de protection pour les hanches</span><span class="req nice">En option</span></li>
           </ul>
         </div>
         <div>
           <h3>Pour ta moto</h3>
+          <p class="kit-intro">Tu as investi dans une GS ou une Africa Twin ? Ce serait dommage de ne pas l'emmener sur son terrain de jeu. Si tu as peur de l'abîmer, c'est normal : alors on la protège.</p>
           <ul>
-            <li><span>Le plein fait</span><span class="req must">Obligatoire</span></li>
-            <li><span>Permis, carte grise et attestation d'assurance</span><span class="req must">Obligatoire</span></li>
-            <li><span>Pneus mixtes ou à crampons</span><span class="req nice">Recommandé</span></li>
-            <li><span>Sabot moteur, crash bars, protège-mains</span><span class="req nice">Recommandé</span></li>
-            <li><span>Valises et top-case démontés</span><span class="req nice">Recommandé</span></li>
+            <li><span>Pneus mixtes, adaptés au terrain</span><span class="req must">Obligatoire</span></li>
+            <li><span>Sabot moteur solide</span><span class="req must">Obligatoire</span></li>
+            <li><span>Crash bars</span><span class="req must">Obligatoire</span></li>
+            <li><span>Permis, carte grise, attestation d'assurance</span><span class="req must">Obligatoire</span></li>
+            <li><span>Protège-mains</span><span class="req nice">En option</span></li>
+            <li><span>Sélecteur et rétroviseurs rétractables</span><span class="req nice">En option</span></li>
           </ul>
         </div>
       </div>
-      <p class="kit-note">Sur place : café d'accueil et eau. Déjeuner <span class="todo">inclus ou non, à confirmer</span>.</p>
+      <p class="kit-quote">Il faut assumer le poids de son ambition.</p>
     </div>
   </section>
 
@@ -582,18 +654,18 @@ fieldset { border: 0; padding: 0; margin: 0; }
       <div class="section-head">
         <p class="eyebrow">Dates et tarifs</p>
         <h2>Prochaines dates</h2>
-        <p>Les stages ont lieu le dimanche, de 8h45 à 17h. Six places par date, pas une de plus.</p>
+        <p>Six places par stage, neuf pour la Prépa voyage. En coaching perso, on fixe la date ensemble.</p>
       </div>
       <div class="dates-grid">
         <div>
           <ul class="sessions" id="sessions"></ul>
-          <p class="dates-note"><span class="todo">Dates d'exemple</span> à remplacer par le vrai calendrier. Une date te manque ? Écris-nous, on ouvre une session dès 4 inscrits.</p>
+          <p class="dates-note"><span class="todo">Dates d'exemple</span> à remplacer par le vrai calendrier. Une date te manque ? Écris-nous.</p>
         </div>
         <aside class="gift" aria-labelledby="giftTitle">
           <p class="eyebrow">Bon cadeau</p>
           <h3 id="giftTitle">Offre un stage</h3>
-          <p class="price">249 €</p>
-          <p>Valable 12 mois, sur la date et le niveau au choix. Tu reçois le bon par e-mail, prêt à imprimer ou à transférer.</p>
+          <p class="price"><small>dès</small> 119 €</p>
+          <p>Valable 12 mois, sur la formule et la date de son choix. Tu reçois le bon par e-mail, prêt à imprimer ou à transférer.</p>
           <a class="btn btn--primary" href="#reserver" data-type="gift">Offrir un bon cadeau</a>
         </aside>
       </div>
@@ -607,27 +679,56 @@ fieldset { border: 0; padding: 0; margin: 0; }
           <p class="eyebrow">Réserver</p>
           <h2>Réserve ta place ou pose ta question.</h2>
         </div>
-        <p>Pour réserver, choisis ta date : tu passes ensuite au paiement sécurisé et tu reçois la confirmation par e-mail.</p>
-        <p>Une question sur ta moto, ton niveau ou une date de groupe ? Choisis « Poser une question », on te répond sous 48 h.</p>
+        <p>En groupe, choisis ta date : tu passes ensuite au paiement sécurisé et tu reçois la confirmation par e-mail. En coaching perso, indique la date qui t'arrange, Adrien te recontacte.</p>
+        <p>Une question sur ta moto, tes pneus ou ton niveau ? Choisis « Poser une question », on te répond sous 48 h.</p>
         <div class="contact-lines">
-          <span>contact@trailbasecamp.fr <span class="todo">à créer</span></span>
-          <span>06 00 00 00 00 <span class="todo">à remplacer</span></span>
+          <a href="mailto:contact@trailbasecamp.fr">contact@trailbasecamp.fr</a>
+          <a href="tel:+33607524117">06 07 52 41 17</a>
         </div>
       </div>
 
       <form id="bookForm" novalidate>
         <fieldset class="field full">
           <legend>Je veux…</legend>
-          <div class="seg" role="radiogroup">
-            <label><input type="radio" name="type" id="t-book" value="book" checked><span>Réserver une place</span></label>
+          <div class="seg">
+            <label><input type="radio" name="type" id="t-book" value="book" checked><span>Réserver</span></label>
             <label><input type="radio" name="type" id="t-gift" value="gift"><span>Offrir un bon cadeau</span></label>
             <label><input type="radio" name="type" id="t-question" value="question"><span>Poser une question</span></label>
           </div>
         </fieldset>
 
-        <div class="field full" data-show="book">
+        <fieldset class="field full" data-show="book">
+          <legend>Format</legend>
+          <div class="seg">
+            <label><input type="radio" name="format" id="fm-group" value="group" checked><span>En groupe</span></label>
+            <label><input type="radio" name="format" id="fm-perso" value="perso"><span>Coaching perso</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field full" data-show="book" data-format="group">
           <label for="f-session">Date du stage</label>
           <select id="f-session" name="session"></select>
+        </div>
+        <div class="field" data-show="book" data-format="perso">
+          <label for="f-perso">Formule</label>
+          <select id="f-perso" name="perso">
+            <option value="">Choisis ta formule</option>
+            <option value="Découverte · journée en coaching perso" data-price="499">Découverte · journée · 499 €</option>
+            <option value="Progression · ½ journée en coaching perso" data-price="269">Progression · ½ journée · 269 €</option>
+          </select>
+        </div>
+        <div class="field" data-show="book" data-format="perso">
+          <label for="f-wish">Date souhaitée</label>
+          <input id="f-wish" name="wish" type="date">
+        </div>
+        <div class="field full" data-show="gift">
+          <label for="f-gift">Bon cadeau</label>
+          <select id="f-gift" name="gift">
+            <option value="Progression · ½ journée en groupe" data-price="119">Progression · ½ journée en groupe · 119 €</option>
+            <option value="Découverte · journée en groupe" data-price="269" selected>Découverte · journée en groupe · 269 €</option>
+            <option value="Progression · ½ journée en coaching perso" data-price="269">Progression · coaching perso · 269 €</option>
+            <option value="Découverte · journée en coaching perso" data-price="499">Découverte · coaching perso · 499 €</option>
+          </select>
         </div>
 
         <div class="field">
@@ -651,17 +752,18 @@ fieldset { border: 0; padding: 0; margin: 0; }
           <label for="f-bike">Ta moto</label>
           <select id="f-bike" name="bike">
             <option value="">Choisis ton modèle</option>
-            <option>BMW R 1300 GS / R 1250 GS</option>
-            <option>BMW GS Adventure</option>
-            <option>BMW F 750 / 800 / 850 / 900 GS</option>
-            <option>Yamaha Ténéré 700</option>
-            <option>Honda Africa Twin</option>
-            <option>Honda Transalp</option>
-            <option>KTM Adventure</option>
-            <option>Triumph Tiger</option>
-            <option>Ducati Multistrada / DesertX</option>
-            <option>Suzuki V-Strom</option>
-            <option>Aprilia Tuareg</option>
+            <optgroup label="Petits trails (300–450 cm³)">
+              <option>Honda CRF300L</option><option>BMW G 310 GS</option><option>KTM 390 Adventure</option><option>Royal Enfield Himalayan 450</option>
+            </optgroup>
+            <optgroup label="Trails moyens (650–900 cm³)">
+              <option>Yamaha Ténéré 700</option><option>Honda Transalp 750</option><option>Aprilia Tuareg 660</option><option>KTM 790 / 890 Adventure</option><option>BMW F 750 / 800 / 850 / 900 GS</option><option>Suzuki V-Strom 650 / 800</option><option>Triumph Tiger 800 / 900</option>
+            </optgroup>
+            <optgroup label="Maxi-trails (1000–1300 cm³)">
+              <option>BMW R 1200 / 1250 / 1300 GS</option><option>BMW GS Adventure</option><option>Honda Africa Twin</option><option>KTM 1090 / 1190 / 1290 Adventure</option><option>Triumph Tiger 1200</option><option>Ducati Multistrada</option>
+            </optgroup>
+            <optgroup label="Scramblers">
+              <option>Triumph Scrambler</option><option>Ducati Scrambler</option><option>Autre scrambler</option>
+            </optgroup>
             <option>Autre trail</option>
           </select>
         </div>
@@ -700,13 +802,18 @@ fieldset { border: 0; padding: 0; margin: 0; }
         <h2>Avant de venir</h2>
       </div>
       <div class="faq">
-        <details><summary>Et si je fais tomber ma moto ?</summary><p>Ça arrive, et ça fait partie de l'apprentissage. On roule à basse vitesse et on t'apprend à relever ta moto. Des protections (crash bars, protège-mains) limitent fortement la casse. Vérifie avant le stage ce que ton assurance couvre sur terrain privé.</p></details>
-        <details><summary>Je débute et mon trail est lourd. C'est pour moi ?</summary><p>Oui, le niveau Découverte est fait pour ça. On commence à l'arrêt, puis au pas, et on n'accélère que quand tu es à l'aise.</p></details>
-        <details><summary>Faut-il des pneus à crampons ?</summary><p>Ce n'est pas obligatoire, mais des pneus mixtes changent tout sur le gravier. Indique tes pneus à la réservation et on te dit si ça passe.</p></details>
-        <details><summary>Et s'il pleut ?</summary><p>On roule sous la pluie : c'est une bonne école. Si le terrain devient dangereux, le stage est reporté sans frais. <span class="todo">Politique météo à valider</span></p></details>
-        <details><summary>Je peux annuler ou reporter ?</summary><p><span class="todo">À définir</span> Proposition : remboursement intégral jusqu'à 14 jours avant le stage, report gratuit jusqu'à 7 jours avant.</p></details>
-        <details><summary>Je peux venir sans ma moto ?</summary><p>Pas pour l'instant : tout le principe est d'apprendre sur la moto que tu utilises ensuite. Si la demande existe, on étudiera une location.</p></details>
-        <details><summary>Je peux venir avec un accompagnant ?</summary><p>Le stage se fait seul sur la moto. Un accompagnant peut venir regarder depuis la zone prévue. <span class="todo">À confirmer avec le terrain</span></p></details>
+        <details><summary>Et si je fais tomber ma moto ?</summary><div class="answer"><p>La chute fait partie de l'apprentissage, et on l'accepte : tu apprends à relever ta moto, on comprend ce qui s'est passé, et on repart sans blocage.</p><p>Attention : sur terrain privé, ton assurance ne prendra en général rien en charge. C'est pour ça que le sabot moteur et les crash bars sont obligatoires.</p></div></details>
+        <details><summary>Je n'ai jamais roulé hors bitume. C'est pour moi ?</summary><div class="answer"><p>Oui. Tu as le permis, tu sais rouler sur l'asphalte : ici, on t'apprend à rouler sur d'autres revêtements, pas à pas. Et si c'est de relever ta moto qui t'inquiète, ça fait partie des bases qu'on travaille.</p></div></details>
+        <details><summary>Quels pneus faut-il ?</summary><div class="answer"><p>Des pneus mixtes, avec des crampons. Adrien roule en Mitas Enduro Trail+ : près de 9 000 km, dont 60 à 70 % sur route, le reste sur terre, pierre, boue et sable.</p><p>Attention à l'homologation : les pneus plus typés tout-terrain (50/50, comme le Mitas E-09) sont souvent limités à 160 ou 190 km/h. Sur une grosse cylindrée capable d'aller plus vite, ton assurance peut refuser de te couvrir en cas d'incident sur route. Pour un petit trail de 450 cm³, pas de souci.</p></div></details>
+        <details><summary>Et s'il pleut ?</summary><div class="answer"><p>On roule sous la pluie, oui. Sous toutes les conditions, non. Si la météo est vraiment trop difficile, le stage est reporté à une date convenue ensemble, ou remboursé.</p></div></details>
+        <details><summary>Je peux annuler ou reporter ?</summary><div class="answer"><div class="policy-wrap"><table class="policy">
+          <tr><td>Plus de 3 semaines avant</td><td>Remboursement intégral</td></tr>
+          <tr><td>Jusqu'à 1 semaine avant</td><td>Report gratuit</td></tr>
+          <tr><td>Jusqu'à 3 jours avant</td><td>Report à 40 €</td></tr>
+          <tr><td>Moins de 3 jours avant</td><td>Ni annulation, ni report</td></tr>
+        </table></div></div></details>
+        <details><summary>Je peux louer une moto ?</summary><div class="answer"><p>Non, pas sur nos stages en France : l'objectif est de savoir maîtriser ta propre moto.</p></div></details>
+        <details><summary>Je peux venir avec un passager ou des proches ?</summary><div class="answer"><p>Les premiers stages se font seul, pour acquérir les bases et de l'expérience avant de rouler de la même façon avec un passager. Les spectateurs, eux, sont les bienvenus.</p></div></details>
       </div>
     </div>
   </section>
@@ -717,7 +824,8 @@ fieldset { border: 0; padding: 0; margin: 0; }
     <img src="media/logo.png" alt="Logo Trail Base Camp" width="567" height="640">
     <div>
       <strong>Trail Base Camp</strong>
-      <p>Stages de pilotage tout-terrain pour trails et maxi-trails, à Vert-Saint-Denis (77).</p>
+      <p>Stages de pilotage tout-terrain pour trails, maxi-trails et scramblers, à Vert-Saint-Denis (77).</p>
+      <p class="foot-contact"><a href="tel:+33607524117">06 07 52 41 17</a> · <a href="mailto:contact@trailbasecamp.fr">contact@trailbasecamp.fr</a></p>
     </div>
     <nav aria-label="Liens légaux">
       <a href="#reserver">Contact</a>
@@ -733,18 +841,17 @@ fieldset { border: 0; padding: 0; margin: 0; }
 (function () {
   "use strict";
 
-  // Programme : cases du roadbook. turn = direction de la tulipe.
+  // Programme de la journée Découverte. turn = direction de la tulipe du roadbook.
   var ROADBOOK = [
-    { t: "08:45", turn: "s", h: "Accueil et contrôle des motos", p: "Café, tour des motos : pression des pneus, réglage des leviers, protections." },
-    { t: "09:15", turn: "s", h: "Briefing", p: "Sécurité, objectifs de chacun, règles du terrain." },
-    { t: "09:30", turn: "r", h: "Position debout et position cross", p: "Torse sorti, jambes tendues, calé contre le réservoir. La base de tout le reste." },
-    { t: "10:30", turn: "l", h: "Maniabilité lente", p: "Slalom, une main, demi-tour, jeu d'embrayage en première." },
-    { t: "11:30", turn: "r", h: "Freinage sur terrain meuble", p: "Le frein avant freine, l'arrière fait déraper. Regard et trajectoire." },
-    { t: "12:30", turn: "s", h: "Pause déjeuner", p: "On refait le point sur la matinée.", brk: true },
-    { t: "13:30", turn: "l", h: "Franchissements", p: "Marches et planches : approche calme, regard sur la sortie, le corps absorbe." },
-    { t: "14:30", turn: "r", h: "Relever sa moto", p: "La bonne technique pour relever plus de 200 kg sans se faire mal." },
-    { t: "15:15", turn: "l", h: "Mise en pratique sur parcours", p: "On enchaîne tous les ateliers, à ton rythme." },
-    { t: "16:30", turn: "s", h: "Débrief", p: "Tes points forts, tes axes de progrès, et quoi travailler ensuite." }
+    { t: "08:30", turn: "s", h: "Accueil et contrôle des motos", p: "Café, tour des motos : pneus, protections, leviers." },
+    { t: "08:45", turn: "s", h: "Briefing", p: "Sécurité, objectifs de chacun, règles du terrain." },
+    { t: "09:00", turn: "r", h: "Zone premier tour de roue", p: "Position debout, position cross, équilibre à basse vitesse." },
+    { t: "10:00", turn: "l", h: "Zone ovale", p: "Maniabilité, freinage sur terrain meuble, regard." },
+    { t: "11:00", turn: "r", h: "Circuit de franchissement", p: "Marches, planches, bosses : consigne, démo, puis à toi." },
+    { t: "12:00", turn: "s", h: "Pause déjeuner", p: "On fait le point sur la matinée.", brk: true },
+    { t: "13:00", turn: "l", h: "Relever sa moto", p: "La bonne technique pour relever ta moto sans te faire mal." },
+    { t: "13:30", turn: "r", h: "Rando de 70 km", p: "Mise en pratique sur routes et chemins ouverts à la circulation, en groupe avec Adrien.", key: true },
+    { t: "16:30", turn: "s", h: "Retour et débrief", p: "Retour entre 16h30 et 17h. Tes points forts, tes axes de progrès." }
   ];
 
   var REELS = [
@@ -755,18 +862,18 @@ fieldset { border: 0; padding: 0; margin: 0; }
     { src: "v-franchissement", h: "Franchissement", p: "Approche calme, regard sur la sortie.", len: "0:39" }
   ];
 
-  // Sessions d'exemple (dimanches). left = places restantes sur 6.
+  // Sessions d'exemple. left = places restantes sur cap. soon = dates à venir, pas encore réservable.
   var SESSIONS = [
-    { id: "2026-11-22", d: "22", m: "nov.", y: "2026", lvl: "Découverte", left: 2 },
-    { id: "2026-12-06", d: "6", m: "déc.", y: "2026", lvl: "Découverte", left: 5 },
-    { id: "2026-12-13", d: "13", m: "déc.", y: "2026", lvl: "Progression", left: 0 },
-    { id: "2027-01-17", d: "17", m: "janv.", y: "2027", lvl: "Découverte", left: 6 },
-    { id: "2027-01-31", d: "31", m: "janv.", y: "2027", lvl: "Progression", left: 6 },
-    { id: "2027-02-14", d: "14", m: "févr.", y: "2027", lvl: "Découverte", left: 6 },
-    { id: "2027-03-07", d: "7", m: "mars", y: "2027", lvl: "Découverte", left: 6 },
-    { id: "2027-03-21", d: "21", m: "mars", y: "2027", lvl: "Progression", left: 6 }
+    { id: "2026-11-22", top: "Dim.", big: "22", sub: "nov. 2026", label: "Découverte · journée", price: 269, cap: 6, left: 2 },
+    { id: "2026-12-06", top: "Dim.", big: "6", sub: "déc. 2026", label: "Découverte · journée", price: 269, cap: 6, left: 5 },
+    { id: "2026-12-13", top: "Dim. matin", big: "13", sub: "déc. 2026", label: "Progression · ½ journée", price: 119, cap: 6, left: 0 },
+    { id: "2027-01-17", top: "Dim.", big: "17", sub: "janv. 2027", label: "Découverte · journée", price: 269, cap: 6, left: 6 },
+    { id: "2027-01-31", top: "Dim. matin", big: "31", sub: "janv. 2027", label: "Progression · ½ journée", price: 119, cap: 6, left: 6 },
+    { id: "2027-02-14", top: "Dim.", big: "14", sub: "févr. 2027", label: "Découverte · journée", price: 269, cap: 6, left: 6 },
+    { id: "2027-03-07", top: "Dim.", big: "7", sub: "mars 2027", label: "Découverte · journée", price: 269, cap: 6, left: 6 },
+    { id: "2027-03-21", top: "Dim. matin", big: "21", sub: "mars 2027", label: "Progression · ½ journée", price: 119, cap: 6, left: 6 },
+    { id: "prepa-2027", top: "Week-end", big: "Prin.", sub: "2027", label: "Prépa voyage · 600–700 km", price: "700 à 800", cap: 9, left: 9, soon: true }
   ];
-  var CAP = 6, PRICE = 249;
 
   function el(tag, attrs, html) {
     var n = document.createElement(tag);
@@ -785,7 +892,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
   // Roadbook
   var rb = document.getElementById("roadbook");
   ROADBOOK.forEach(function (r, i) {
-    var li = el("li", { class: "rb-row" + (r.brk ? " is-break" : "") });
+    var li = el("li", { class: "rb-row" + (r.brk ? " is-break" : "") + (r.key ? " is-key" : "") });
     li.innerHTML =
       '<div class="rb-case">' + String(i + 1).padStart(2, "0") + "</div>" +
       '<div class="rb-time">' + r.t + "</div>" +
@@ -803,62 +910,68 @@ fieldset { border: 0; padding: 0; margin: 0; }
       "<div><h3>" + esc(v.h) + "</h3><p>" + esc(v.p) + '</p><span class="len">' + v.len + "</span></div>";
     reels.appendChild(a);
   });
-  // Une seule vidéo avec son à la fois
   reels.addEventListener("play", function (e) {
     reels.querySelectorAll("video").forEach(function (v) { if (v !== e.target) v.pause(); });
   }, true);
 
+  // Formulaire : éléments utilisés par les sessions
+  var form = document.getElementById("bookForm");
+  var select = document.getElementById("f-session");
+  var msg = document.getElementById("f-msg");
+  var submitBtn = document.getElementById("submitBtn");
+  var hint = document.getElementById("submitHint");
+
+  function priceLabel(p) { return (typeof p === "number" ? p : p) + " €"; }
+  function check(id) { var r = document.getElementById(id); if (r) r.checked = true; }
+  function currentType() { return form.querySelector('input[name="type"]:checked').value; }
+  function currentFormat() { return form.querySelector('input[name="format"]:checked').value; }
+  function applyType() {
+    var t = currentType(), f = currentFormat();
+    form.querySelectorAll("[data-show]").forEach(function (n) {
+      var okType = n.getAttribute("data-show").split(" ").indexOf(t) !== -1;
+      var fmt = n.getAttribute("data-format");
+      n.hidden = !(okType && (!fmt || fmt === f));
+    });
+    submitBtn.textContent = t === "question" ? "Envoyer ma question" : (t === "book" && f === "perso") ? "Envoyer ma demande" : "Continuer vers le paiement";
+    hint.textContent = t === "question" ? "Réponse sous 48 h." : (t === "book" && f === "perso") ? "Adrien te recontacte pour caler la date." : "Paiement sécurisé par carte bancaire.";
+  }
+  function setType(t, f) { check("t-" + t); if (f) check("fm-" + f); applyType(); }
+
   // Sessions
   var list = document.getElementById("sessions");
-  var select = document.getElementById("f-session");
   SESSIONS.forEach(function (s) {
     var full = s.left <= 0;
     var dots = "";
-    for (var i = 0; i < CAP; i++) dots += '<i class="' + (i < CAP - s.left ? "taken" : "") + '"></i>';
+    for (var i = 0; i < s.cap; i++) dots += '<i class="' + (i < s.cap - s.left ? "taken" : "") + '"></i>';
+    var status = s.soon ? s.cap + " places · dates à venir" : full ? "Complet" : s.left + (s.left > 1 ? " places restantes" : " place restante");
     var li = el("li", { class: "session" + (full ? " is-full" : "") });
     li.innerHTML =
-      '<div class="s-date"><small>Dim.</small><b>' + s.d + "</b><small>" + s.m + " " + s.y + "</small></div>" +
-      '<div class="s-info"><span class="s-level">' + s.lvl + " · " + PRICE + ' €</span>' +
-      '<span class="seats"><span class="seat-dots" aria-hidden="true">' + dots + "</span>" +
-      (full ? "Complet" : s.left + (s.left > 1 ? " places restantes" : " place restante")) + "</span></div>";
-    var b = el("a", { class: "btn " + (full ? "btn--ghost" : "btn--primary"), href: "#reserver" }, full ? "Liste d'attente" : "Réserver");
+      '<div class="s-date"><small>' + esc(s.top) + "</small><b>" + esc(s.big) + "</b><small>" + esc(s.sub) + "</small></div>" +
+      '<div class="s-info"><span class="s-level">' + esc(s.label) + " · " + esc(priceLabel(s.price)) + "</span>" +
+      '<span class="seats"><span class="seat-dots" aria-hidden="true">' + dots + "</span>" + status + "</span></div>";
+    var label = s.soon ? "Être prévenu" : full ? "Liste d'attente" : "Réserver";
+    var b = el("a", { class: "btn " + (s.soon || full ? "btn--ghost" : "btn--primary"), href: "#reserver" }, label);
     b.addEventListener("click", function () {
-      setType(full ? "question" : "book");
-      if (full) document.getElementById("f-msg").value = "Liste d'attente pour le dimanche " + s.d + " " + s.m + " " + s.y + " (" + s.lvl + ").";
-      else select.value = s.id;
+      if (s.soon) { setType("question"); msg.value = "Je veux être prévenu des dates de la " + s.label + "."; }
+      else if (full) { setType("question"); msg.value = "Liste d'attente : " + s.label + ", " + s.big + " " + s.sub + "."; }
+      else { setType("book", "group"); select.value = s.id; }
     });
     li.appendChild(b);
     list.appendChild(li);
 
-    var o = el("option", { value: s.id }, "Dim. " + s.d + " " + s.m + " " + s.y + " · " + s.lvl + (full ? " · complet" : " · " + s.left + " pl."));
-    if (full) o.disabled = true;
-    select.appendChild(o);
+    if (!s.soon) {
+      var o = el("option", { value: s.id, "data-price": String(s.price) }, esc(s.top + " " + s.big + " " + s.sub + " · " + s.label + " · " + priceLabel(s.price) + (full ? " · complet" : "")));
+      if (full) o.disabled = true;
+      select.appendChild(o);
+    }
   });
 
-  // Type de demande
-  var form = document.getElementById("bookForm");
-  var submitBtn = document.getElementById("submitBtn");
-  var hint = document.getElementById("submitHint");
-  function setType(t) {
-    var r = document.getElementById("t-" + t);
-    if (r) r.checked = true;
-    applyType();
-  }
-  function currentType() { return form.querySelector('input[name="type"]:checked').value; }
-  function applyType() {
-    var t = currentType();
-    form.querySelectorAll("[data-show]").forEach(function (n) {
-      n.hidden = n.getAttribute("data-show").split(" ").indexOf(t) === -1;
-    });
-    submitBtn.textContent = t === "question" ? "Envoyer ma question" : "Continuer vers le paiement";
-    hint.textContent = t === "question" ? "Réponse sous 48 h." : "Paiement sécurisé par carte bancaire.";
-  }
-  form.querySelectorAll('input[name="type"]').forEach(function (r) { r.addEventListener("change", applyType); });
+  form.querySelectorAll('input[name="type"], input[name="format"]').forEach(function (r) { r.addEventListener("change", applyType); });
   document.querySelectorAll("[data-type]").forEach(function (a) {
     a.addEventListener("click", function () {
       setType(a.getAttribute("data-type"));
       var m = a.getAttribute("data-msg");
-      if (m) document.getElementById("f-msg").value = m;
+      if (m) msg.value = m;
     });
   });
   applyType();
@@ -866,27 +979,34 @@ fieldset { border: 0; padding: 0; margin: 0; }
   // Envoi (maquette : rien ne part)
   var err = document.getElementById("formErr");
   var confirmBox = document.getElementById("confirm");
+  function selected(sel) { return sel.options[sel.selectedIndex]; }
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     err.textContent = "";
-    var t = currentType();
+    var t = currentType(), f = currentFormat();
     var first = form.first.value.trim(), last = form.last.value.trim(), email = form.email.value.trim();
     if (!first || !last) { err.textContent = "Indique ton prénom et ton nom."; return; }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = "Vérifie ton adresse e-mail."; return; }
-    if (t === "book" && !form.session.value) { err.textContent = "Choisis une date."; return; }
+    if (t === "book" && f === "group" && !form.session.value) { err.textContent = "Choisis une date."; return; }
+    if (t === "book" && f === "perso" && !form.perso.value) { err.textContent = "Choisis ta formule."; return; }
+    if (t === "book" && f === "perso" && !form.wish.value) { err.textContent = "Indique une date souhaitée."; return; }
     if (t === "book" && !form.bike.value) { err.textContent = "Indique ta moto."; return; }
     if (t !== "question" && !form.cgv.checked) { err.textContent = "Coche l'acceptation des conditions de vente."; return; }
 
-    var rows = [["Demande", t === "book" ? "Réservation" : t === "gift" ? "Bon cadeau" : "Question"], ["Nom", first + " " + last], ["E-mail", email]];
-    if (t === "book") {
-      var opt = form.session.options[form.session.selectedIndex];
-      rows.push(["Stage", opt ? opt.textContent : ""], ["Moto", form.bike.value], ["Expérience", form.exp.value]);
-    }
-    if (t !== "question") rows.push(["Montant", PRICE + " €"]);
+    var rows = [["Demande", t === "book" ? (f === "perso" ? "Coaching perso" : "Réservation en groupe") : t === "gift" ? "Bon cadeau" : "Question"], ["Nom", first + " " + last], ["E-mail", email]];
+    var amount = null;
+    if (t === "book" && f === "group") { var so = selected(form.session); rows.push(["Stage", so ? so.textContent : ""]); amount = so && so.getAttribute("data-price"); }
+    if (t === "book" && f === "perso") { var po = selected(form.perso); rows.push(["Formule", po.value], ["Date souhaitée", form.wish.value]); amount = po.getAttribute("data-price"); }
+    if (t === "book") rows.push(["Moto", form.bike.value], ["Expérience", form.exp.value]);
+    if (t === "gift") { var go = selected(form.gift); rows.push(["Bon cadeau", go.value]); amount = go.getAttribute("data-price"); }
+    if (amount) rows.push(["Montant", amount + " €"]);
+
+    var note = t === "question" ? "Sur le vrai site, ta question arrive par e-mail à Adrien."
+      : (t === "book" && f === "perso") ? "Sur le vrai site, Adrien reçoit ta demande et te recontacte pour confirmer la date."
+      : "Sur le vrai site, ce bouton ouvre le paiement sécurisé.";
     confirmBox.innerHTML =
-      "<h3>" + (t === "question" ? "Question prête à partir" : "Prêt pour le paiement") + "</h3>" +
-      "<p>Ceci est une maquette : aucune donnée n'a été envoyée. " +
-      (t === "question" ? "Sur le vrai site, ta question arrive par e-mail à l'équipe." : "Sur le vrai site, ce bouton ouvre le paiement sécurisé Stripe de la date choisie.") + "</p>" +
+      "<h3>" + (t === "question" || (t === "book" && f === "perso") ? "Demande prête à partir" : "Prêt pour le paiement") + "</h3>" +
+      "<p>Ceci est une maquette : aucune donnée n'a été envoyée. " + note + "</p>" +
       "<dl>" + rows.map(function (r) { return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("") + "</dl>";
     confirmBox.hidden = false;
     confirmBox.focus();
