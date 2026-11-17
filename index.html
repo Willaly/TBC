@@ -224,7 +224,10 @@ p { margin: 0; }
 /* Moniteur */
 .coach { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
 .coach-photo { margin: 0; }
-.coach-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
+.coach-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 30%; border-radius: var(--radius); }
+.coach-bike { margin: 22px 0 0; display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: center; }
+.coach-bike img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 4px; }
+.coach-bike figcaption { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); }
 .coach-photo figcaption { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); margin-top: 8px; }
 .coach h2 { font-size: var(--step-3); margin-top: 10px; }
 .coach .role { font-family: var(--f-mono); font-size: 0.9rem; font-weight: 600; margin-top: 12px; }
@@ -578,8 +581,8 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
     <div class="wrap">
       <div class="coach">
         <figure class="coach-photo">
-          <img src="media/transalp-circuit.jpg" alt="La Honda Transalp 750 d'Adrien à l'entrée du circuit moto">
-          <figcaption>La Transalp 750 d'Adrien, à l'entrée du terrain <span class="todo">portrait d'Adrien à ajouter</span></figcaption>
+          <img src="media/adrien.jpg" alt="Portrait d'Adrien, moniteur Trail Base Camp, devant sa moto sur une piste du désert">
+          <figcaption>Adrien, en road trip sur les pistes du désert</figcaption>
         </figure>
         <div>
           <p class="eyebrow">Ton moniteur</p>
@@ -587,6 +590,10 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
           <p class="role">Pilote de Transalp 750 · encadrement et road trips guidés</p>
           <p class="bio">Toute l'année, je t'accueille sur le terrain privé de notre partenaire Fast Off Road. Tu apprends au fil d'ateliers ludiques, avec un fil conducteur clair : consigne, démonstration, mise en pratique, puis axes d'amélioration personnalisés.</p>
           <p class="cred"><span class="todo">Diplôme d'encadrement moto et n° de carte professionnelle à afficher</span></p>
+          <figure class="coach-bike">
+            <img src="media/transalp-circuit.jpg" alt="La Honda Transalp 750 d'Adrien à l'entrée du circuit moto">
+            <figcaption>Sa Transalp 750, à l'entrée du terrain de Vert-Saint-Denis</figcaption>
+          </figure>
         </div>
       </div>
       <div class="coach-points">
