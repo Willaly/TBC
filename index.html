@@ -186,10 +186,27 @@ p { margin: 0; }
 .offer, .offer > * { min-width: 0; }
 
 /* Vidéos */
-.reels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.reels { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+.terrain-vids { margin-top: clamp(40px, 6vw, 64px); display: grid; gap: 16px; }
+.tv-head { display: grid; gap: 6px; }
+.tv-head h3 { font-size: var(--step-2); }
+.tv-head p { color: var(--muted); max-width: 62ch; }
+.tv-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.tv-filters button { font: 600 0.9rem var(--f-body); padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.tv-filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tv-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.tv-card { display: grid; gap: 6px; align-content: start; }
+.tv-card video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius); background: #26301f; }
+.tv-card h4 { margin: 0; font-size: 0.95rem; font-weight: 700; line-height: 1.25; }
+.tv-card span { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); }
+@media (max-width: 1000px) {
+  .tv-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(160px, 40%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
+  .tv-card { scroll-snap-align: start; }
+}
 .reel { display: grid; gap: 10px; align-content: start; }
 .reel video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius); background: #26301f; }
-.reel h3 { font-size: 1.3rem; }
+.reel { min-width: 0; }
+.reel h3 { font-size: 1.15rem; overflow-wrap: anywhere; hyphens: auto; }
 .reel p { font-size: 0.92rem; color: var(--muted); }
 .reel .len { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); }
 @media (max-width: 1000px) {
@@ -526,6 +543,22 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
         <p>Des extraits tournés pendant les stages, sur le terrain de Vert-Saint-Denis. Le son démarre quand tu lances la vidéo.</p>
       </div>
       <div class="reels" id="reels"></div>
+      <div class="terrain-vids">
+        <div class="tv-head">
+          <h3>Le terrain en vidéo</h3>
+          <p>19 séquences tournées sur le terrain de Fast Off Road, à Vert-Saint-Denis. Filtre par type de terrain.</p>
+        </div>
+        <div class="tv-filters" id="tvFilters" role="group" aria-label="Filtrer les vidéos par type de terrain">
+          <button type="button" data-cat="all" aria-pressed="true">Tout</button>
+          <button type="button" data-cat="montees" aria-pressed="false">Montées</button>
+          <button type="button" data-cat="descentes" aria-pressed="false">Descentes et bosses</button>
+          <button type="button" data-cat="sable" aria-pressed="false">Sable et ornières</button>
+          <button type="button" data-cat="eau" aria-pressed="false">Eau et boue</button>
+          <button type="button" data-cat="foret" aria-pressed="false">Forêt et prairie</button>
+          <button type="button" data-cat="zones" aria-pressed="false">Zones éducatives</button>
+        </div>
+        <div class="tv-grid" id="tvGrid"></div>
+      </div>
     </div>
   </section>
 
@@ -900,7 +933,31 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
     { src: "v-reservoir", h: "Colle-toi au réservoir", p: "Assis ou debout, toujours calé devant.", len: "0:25" },
     { src: "v-slalom", h: "Slalom à une main", p: "Debout, en première, avec l'embrayage.", len: "0:51" },
     { src: "v-freinage", h: "Freinage", p: "Le frein avant freine. L'arrière fait déraper.", len: "1:03" },
-    { src: "v-franchissement", h: "Franchissement", p: "Approche calme, regard sur la sortie.", len: "0:39" }
+    { src: "v-franchissement", h: "Franchissement", p: "Approche calme, regard sur la sortie.", len: "0:39" },
+    { src: "v-coach-debout", h: "« Position debout »", p: "Ce que dit le coach, et ce que fait ton corps.", len: "0:57" }
+  ];
+
+  // Séquences terrain. cat = filtre.
+  var TERRAIN_VIDS = [
+    { src: "t-montee-sable", h: "Montée sableuse", cat: "montees", len: "0:45" },
+    { src: "t-grande-montee", h: "Grande montée", cat: "montees", len: "0:15" },
+    { src: "t-montee-ornieres", h: "Montée dans les ornières", cat: "montees", len: "0:06" },
+    { src: "t-descente-ornieres", h: "Descente dans les ornières", cat: "descentes", len: "0:11" },
+    { src: "t-descente-talus", h: "Descente de talus", cat: "descentes", len: "0:11" },
+    { src: "t-bosses", h: "Bosses", cat: "descentes", len: "0:09" },
+    { src: "t-bosses-talus", h: "Bosses et talus", cat: "descentes", len: "0:09" },
+    { src: "t-virage-sable", h: "Virage dans le sable", cat: "sable", len: "0:14" },
+    { src: "t-ornieres-herbes", h: "Ornières et herbes hautes", cat: "sable", len: "0:22" },
+    { src: "t-passage-eau", h: "Passage dans l'eau", cat: "eau", len: "0:15" },
+    { src: "t-flaques", h: "Piste et flaques", cat: "eau", len: "0:06" },
+    { src: "t-single-foret", h: "Single en forêt", cat: "foret", len: "0:45" },
+    { src: "t-piste-arbres", h: "Piste entre les arbres", cat: "foret", len: "0:07" },
+    { src: "t-single", h: "Single", cat: "foret", len: "0:05" },
+    { src: "t-prairie", h: "Prairie", cat: "foret", len: "0:29" },
+    { src: "t-maniabilite", h: "Maniabilité", cat: "zones", len: "0:18" },
+    { src: "t-freinage-virage", h: "Freinage et virage", cat: "zones", len: "0:18" },
+    { src: "t-ovale-1", h: "Zone ovale", cat: "zones", len: "0:35" },
+    { src: "t-ovale-2", h: "Zone ovale, autre passage", cat: "zones", len: "0:21" }
   ];
 
   // Sessions d'exemple. left = places restantes sur cap. soon = dates à venir, pas encore réservable.
@@ -951,8 +1008,33 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
       "<div><h3>" + esc(v.h) + "</h3><p>" + esc(v.p) + '</p><span class="len">' + v.len + "</span></div>";
     reels.appendChild(a);
   });
-  reels.addEventListener("play", function (e) {
-    reels.querySelectorAll("video").forEach(function (v) { if (v !== e.target) v.pause(); });
+  // Galerie terrain + filtres
+  var tvGrid = document.getElementById("tvGrid");
+  TERRAIN_VIDS.forEach(function (v) {
+    var a = el("article", { class: "tv-card", "data-cat": v.cat });
+    a.innerHTML =
+      '<video controls playsinline preload="none" poster="media/' + v.src + '.jpg" src="media/' + v.src + '.mp4" aria-label="' + esc(v.h) + '"></video>' +
+      "<h4>" + esc(v.h) + '</h4><span>' + v.len + "</span>";
+    tvGrid.appendChild(a);
+  });
+  var tvFilters = document.getElementById("tvFilters");
+  tvFilters.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    var cat = b.getAttribute("data-cat");
+    tvFilters.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    tvGrid.querySelectorAll(".tv-card").forEach(function (c) {
+      var show = cat === "all" || c.getAttribute("data-cat") === cat;
+      if (!show) c.querySelector("video").pause();
+      c.hidden = !show;
+    });
+    tvGrid.scrollLeft = 0;
+  });
+
+  // Une seule vidéo avec son à la fois, dans toute la section
+  var consignes = document.getElementById("consignes");
+  consignes.addEventListener("play", function (e) {
+    consignes.querySelectorAll("video").forEach(function (v) { if (v !== e.target) v.pause(); });
   }, true);
 
   // Formulaire : éléments utilisés par les sessions
