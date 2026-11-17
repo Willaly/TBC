@@ -194,7 +194,19 @@ p { margin: 0; }
 .tv-filters { display: flex; flex-wrap: wrap; gap: 8px; }
 .tv-filters button { font: 600 0.9rem var(--f-body); padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
 .tv-filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.tv-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.tv-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; max-width: 980px; }
+.tv-filters .count { font-family: var(--f-mono); font-size: 0.75rem; opacity: .65; margin-left: 6px; }
+.tv-thumbs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 28px; padding: 18px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+.tv-group { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.tv-group-label { font-family: var(--f-mono); font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.tv-thumb-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tv-thumb { position: relative; width: 64px; padding: 0; border: 0; border-radius: 4px; overflow: hidden; cursor: pointer; background: #26301f; }
+.tv-thumb img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform .2s ease; }
+.tv-thumb:hover img, .tv-thumb:focus-visible img { transform: scale(1.07); }
+.tv-thumb::after { content: ""; position: absolute; left: 50%; top: 44%; transform: translate(-40%, -50%); border-left: 10px solid #fff; border-top: 6px solid transparent; border-bottom: 6px solid transparent; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .7)); }
+.tv-dur { position: absolute; right: 3px; bottom: 3px; font: 600 0.6rem var(--f-mono); color: #fff; background: rgba(0, 0, 0, .6); padding: 0 3px; border-radius: 2px; }
+@media (max-width: 860px) { .tv-thumbs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 14px; } .tv-thumb { width: 56px; } }
+@media (prefers-reduced-motion: reduce) { .tv-thumb img { transition: none; } }
 .tv-card { display: grid; gap: 6px; align-content: start; }
 .tv-card video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: var(--radius); background: #26301f; }
 .tv-card h4 { margin: 0; font-size: 0.95rem; font-weight: 700; line-height: 1.25; }
@@ -546,7 +558,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
       <div class="terrain-vids">
         <div class="tv-head">
           <h3>Le terrain en vidéo</h3>
-          <p>19 séquences tournées sur le terrain de Fast Off Road, à Vert-Saint-Denis. Filtre par type de terrain.</p>
+          <p>19 séquences tournées sur le terrain de Fast Off Road, à Vert-Saint-Denis. Choisis un type de terrain, ou clique sur une vignette.</p>
         </div>
         <div class="tv-filters" id="tvFilters" role="group" aria-label="Filtrer les vidéos par type de terrain">
           <button type="button" data-cat="all" aria-pressed="true">Tout</button>
@@ -557,7 +569,8 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
           <button type="button" data-cat="foret" aria-pressed="false">Forêt et prairie</button>
           <button type="button" data-cat="zones" aria-pressed="false">Zones éducatives</button>
         </div>
-        <div class="tv-grid" id="tvGrid"></div>
+        <div class="tv-thumbs" id="tvThumbs"></div>
+        <div class="tv-grid" id="tvGrid" hidden></div>
       </div>
     </div>
   </section>
@@ -1011,24 +1024,61 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
   // Galerie terrain + filtres
   var tvGrid = document.getElementById("tvGrid");
   TERRAIN_VIDS.forEach(function (v) {
-    var a = el("article", { class: "tv-card", "data-cat": v.cat });
+    var a = el("article", { class: "tv-card", "data-cat": v.cat, "data-src": v.src });
     a.innerHTML =
       '<video controls playsinline preload="none" poster="media/' + v.src + '.jpg" src="media/' + v.src + '.mp4" aria-label="' + esc(v.h) + '"></video>' +
       "<h4>" + esc(v.h) + '</h4><span>' + v.len + "</span>";
     tvGrid.appendChild(a);
   });
+  // Aperçu « Tout » : petites vignettes regroupées par type de terrain
+  var CATS = [["montees", "Montées"], ["descentes", "Descentes et bosses"], ["sable", "Sable et ornières"], ["eau", "Eau et boue"], ["foret", "Forêt et prairie"], ["zones", "Zones éducatives"]];
+  var tvThumbs = document.getElementById("tvThumbs");
+  CATS.forEach(function (c) {
+    var items = TERRAIN_VIDS.filter(function (v) { return v.cat === c[0]; });
+    var g = el("div", { class: "tv-group" });
+    g.innerHTML = '<span class="tv-group-label">' + esc(c[1]) + '</span><div class="tv-thumb-row"></div>';
+    var row = g.querySelector(".tv-thumb-row");
+    items.forEach(function (v) {
+      var b = el("button", { type: "button", class: "tv-thumb", "data-cat": c[0], "data-src": v.src, "aria-label": "Voir la vidéo : " + v.h, title: v.h });
+      b.innerHTML = '<img src="media/' + v.src + '.jpg" alt="" loading="lazy"><span class="tv-dur">' + v.len + "</span>";
+      row.appendChild(b);
+    });
+    tvThumbs.appendChild(g);
+  });
+
   var tvFilters = document.getElementById("tvFilters");
-  tvFilters.addEventListener("click", function (e) {
-    var b = e.target.closest("button");
-    if (!b) return;
+  tvFilters.querySelectorAll("button").forEach(function (b) {
     var cat = b.getAttribute("data-cat");
-    tvFilters.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    var n = cat === "all" ? TERRAIN_VIDS.length : TERRAIN_VIDS.filter(function (v) { return v.cat === cat; }).length;
+    b.insertAdjacentHTML("beforeend", '<span class="count">' + n + "</span>");
+  });
+  function setTerrainCat(cat, focusSrc) {
+    var all = cat === "all";
+    tvFilters.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x.getAttribute("data-cat") === cat)); });
+    tvThumbs.hidden = !all;
+    tvGrid.hidden = all;
     tvGrid.querySelectorAll(".tv-card").forEach(function (c) {
-      var show = cat === "all" || c.getAttribute("data-cat") === cat;
+      var show = !all && c.getAttribute("data-cat") === cat;
       if (!show) c.querySelector("video").pause();
       c.hidden = !show;
     });
     tvGrid.scrollLeft = 0;
+    if (focusSrc) {
+      var card = tvGrid.querySelector('.tv-card[data-src="' + focusSrc + '"]');
+      if (card) {
+        card.scrollIntoView({ block: "nearest", inline: "start" });
+        var p = card.querySelector("video").play();
+        if (p && p.catch) p.catch(function () {});
+      }
+    }
+  }
+  tvFilters.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (b) setTerrainCat(b.getAttribute("data-cat"));
+  });
+  tvThumbs.addEventListener("click", function (e) {
+    var t = e.target.closest(".tv-thumb");
+    if (t) setTerrainCat(t.getAttribute("data-cat"), t.getAttribute("data-src"));
   });
 
   // Une seule vidéo avec son à la fois, dans toute la section
