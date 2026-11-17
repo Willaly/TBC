@@ -307,6 +307,10 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .seg input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 2px; }
 .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
 .check input { width: 18px; height: 18px; margin-top: 3px; flex: none; accent-color: var(--orange); }
+.check em { font-style: normal; color: var(--muted); }
+.checks { display: grid; gap: 8px; margin-top: 6px; }
+.hint { color: var(--muted); font-size: 0.82rem; }
+.kit-rule { margin-top: 28px; padding: 14px 16px; border-left: 4px solid var(--orange); background: var(--surface); font-weight: 600; max-width: 70ch; }
 .form-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .form-actions small { color: var(--muted); }
 .err { color: var(--full); font-size: 0.85rem; font-weight: 600; }
@@ -645,6 +649,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
           </ul>
         </div>
       </div>
+      <p class="kit-rule">Règle de sécurité : s'il manque un seul élément obligatoire, pour toi ou pour ta moto, tu ne peux pas rouler. La journée n'est alors ni remboursée ni reportée.</p>
       <p class="kit-quote">Il faut assumer le poids de son ambition.</p>
     </div>
   </section>
@@ -679,7 +684,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
           <p class="eyebrow">Réserver</p>
           <h2>Réserve ta place ou pose ta question.</h2>
         </div>
-        <p>En groupe, choisis ta date : tu passes ensuite au paiement sécurisé et tu reçois la confirmation par e-mail. En coaching perso, indique la date qui t'arrange, Adrien te recontacte.</p>
+        <p>En groupe, choisis ta date : tu paies la totalité en ligne et ta place est confirmée par e-mail. Pas de paiement sur place. En coaching perso, indique la date qui t'arrange : Adrien te recontacte et t'envoie le lien de paiement.</p>
         <p>Une question sur ta moto, tes pneus ou ton niveau ? Choisis « Poser une question », on te répond sous 48 h.</p>
         <div class="contact-lines">
           <a href="mailto:contact@trailbasecamp.fr">contact@trailbasecamp.fr</a>
@@ -766,6 +771,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
             </optgroup>
             <option>Autre trail</option>
           </select>
+          <small class="hint">Sportives, roadsters et routières ne sont pas acceptées.</small>
         </div>
         <div class="field" data-show="book">
           <label for="f-exp">Tu as déjà roulé hors bitume ?</label>
@@ -775,14 +781,42 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
             <option>Régulièrement</option>
           </select>
         </div>
+        <div class="field full" data-show="book" id="f-bike-other-field">
+          <label for="f-bike-other">Précise le modèle et l'année de ta moto</label>
+          <input id="f-bike-other" name="bikeOther" placeholder="Ex. : Kawasaki Versys 650, 2021">
+        </div>
+        <div class="field full" data-show="book">
+          <label for="f-tyres">Tes pneus</label>
+          <select id="f-tyres" name="tyres">
+            <option value="">Choisis ton type de pneus</option>
+            <option value="Mixtes (type 70/30)">Mixtes, type 70/30</option>
+            <option value="Tout-terrain à crampons (type 50/50)">Tout-terrain à crampons, type 50/50</option>
+            <option value="Route, je monte des mixtes avant le stage">Route : je monte des pneus mixtes avant le stage</option>
+            <option value="Route">Route, et je n'en changerai pas</option>
+          </select>
+        </div>
+        <fieldset class="field full" data-show="book">
+          <legend>Le jour du stage, ma moto aura :</legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" id="f-sabot" name="sabot"> <span>Un sabot moteur <em>(obligatoire)</em></span></label>
+            <label class="check"><input type="checkbox" id="f-crash" name="crash"> <span>Des crash bars <em>(obligatoire)</em></span></label>
+            <label class="check"><input type="checkbox" id="f-hands" name="hands"> <span>Des protège-mains <em>(en option)</em></span></label>
+          </div>
+        </fieldset>
+        <div class="field full" data-show="book">
+          <label class="check"><input type="checkbox" id="f-gear" name="gear"> <span>Je viendrai avec l'équipement pilote obligatoire : casque adventure, gants, protections des coudes, épaules, torse et dos, orthèses de genoux, bottes adventure.</span></label>
+        </div>
 
         <div class="field full">
           <label for="f-msg">Message <span style="font-weight:400;color:var(--muted)">(pneus, protections, question…)</span></label>
           <textarea id="f-msg" name="msg"></textarea>
         </div>
 
+        <div class="field full" data-show="book">
+          <label class="check"><input type="checkbox" id="f-image" name="image"> <span>J'accepte que mon image (photos, vidéos du stage) apparaisse sur le site et les réseaux de Trail Base Camp. <em>Facultatif.</em></span></label>
+        </div>
         <div class="field full" data-show="book gift">
-          <label class="check"><input type="checkbox" id="f-cgv" name="cgv"> <span>J'accepte les conditions générales de vente et la politique d'annulation. <span class="todo">CGV à rédiger</span></span></label>
+          <label class="check"><input type="checkbox" id="f-cgv" name="cgv"> <span>J'accepte les conditions générales de vente, dont la règle de sécurité : sans l'équipement obligatoire, pas de stage et pas de remboursement. <span class="todo">lien vers les CGV à ajouter</span></span></label>
         </div>
 
         <div class="form-actions">
@@ -807,11 +841,11 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
         <details><summary>Quels pneus faut-il ?</summary><div class="answer"><p>Des pneus mixtes, avec des crampons. Adrien roule en Mitas Enduro Trail+ : près de 9 000 km, dont 60 à 70 % sur route, le reste sur terre, pierre, boue et sable.</p><p>Attention à l'homologation : les pneus plus typés tout-terrain (50/50, comme le Mitas E-09) sont souvent limités à 160 ou 190 km/h. Sur une grosse cylindrée capable d'aller plus vite, ton assurance peut refuser de te couvrir en cas d'incident sur route. Pour un petit trail de 450 cm³, pas de souci.</p></div></details>
         <details><summary>Et s'il pleut ?</summary><div class="answer"><p>On roule sous la pluie, oui. Sous toutes les conditions, non. Si la météo est vraiment trop difficile, le stage est reporté à une date convenue ensemble, ou remboursé.</p></div></details>
         <details><summary>Je peux annuler ou reporter ?</summary><div class="answer"><div class="policy-wrap"><table class="policy">
-          <tr><td>Plus de 3 semaines avant</td><td>Remboursement intégral</td></tr>
-          <tr><td>Jusqu'à 1 semaine avant</td><td>Report gratuit</td></tr>
-          <tr><td>Jusqu'à 3 jours avant</td><td>Report à 40 €</td></tr>
-          <tr><td>Moins de 3 jours avant</td><td>Ni annulation, ni report</td></tr>
-        </table></div></div></details>
+          <tr><td>Plus de 14 jours avant</td><td>Remboursement intégral, ou report gratuit</td></tr>
+          <tr><td>Entre 14 jours et 72 h avant</td><td>Annulation ou report, avec 40 € de frais</td></tr>
+          <tr><td>Moins de 72 h avant</td><td>Ni remboursement, ni report</td></tr>
+        </table></div><p>Tu peux aussi céder ta place à quelqu'un d'autre jusqu'à 24 h avant le stage. <span class="todo">à valider</span></p></div></details>
+        <details><summary>Et s'il me manque un équipement le jour du stage ?</summary><div class="answer"><p>Tu ne pourras pas rouler. C'est une règle de sécurité : sans l'équipement obligatoire, pour toi ou pour ta moto, le moniteur ne peut pas valider ta participation, et la journée n'est ni remboursée ni reportée. La liste complète est dans la partie Équipement.</p></div></details>
         <details><summary>Je peux louer une moto ?</summary><div class="answer"><p>Non, pas sur nos stages en France : l'objectif est de savoir maîtriser ta propre moto.</p></div></details>
         <details><summary>Je peux venir avec un passager ou des proches ?</summary><div class="answer"><p>Les premiers stages se font seul, pour acquérir les bases et de l'expérience avant de rouler de la même façon avec un passager. Les spectateurs, eux, sont les bienvenus.</p></div></details>
       </div>
@@ -932,6 +966,8 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
       var fmt = n.getAttribute("data-format");
       n.hidden = !(okType && (!fmt || fmt === f));
     });
+    var otherField = document.getElementById("f-bike-other-field");
+    if (!otherField.hidden) otherField.hidden = !/^Autre/.test(form.bike.value);
     submitBtn.textContent = t === "question" ? "Envoyer ma question" : (t === "book" && f === "perso") ? "Envoyer ma demande" : "Continuer vers le paiement";
     hint.textContent = t === "question" ? "Réponse sous 48 h." : (t === "book" && f === "perso") ? "Adrien te recontacte pour caler la date." : "Paiement sécurisé par carte bancaire.";
   }
@@ -967,6 +1003,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
   });
 
   form.querySelectorAll('input[name="type"], input[name="format"]').forEach(function (r) { r.addEventListener("change", applyType); });
+  form.bike.addEventListener("change", applyType);
   document.querySelectorAll("[data-type]").forEach(function (a) {
     a.addEventListener("click", function () {
       setType(a.getAttribute("data-type"));
@@ -991,13 +1028,22 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
     if (t === "book" && f === "perso" && !form.perso.value) { err.textContent = "Choisis ta formule."; return; }
     if (t === "book" && f === "perso" && !form.wish.value) { err.textContent = "Indique une date souhaitée."; return; }
     if (t === "book" && !form.bike.value) { err.textContent = "Indique ta moto."; return; }
+    if (t === "book" && /^Autre/.test(form.bike.value) && !form.bikeOther.value.trim()) { err.textContent = "Précise le modèle de ta moto."; return; }
+    if (t === "book" && !form.tyres.value) { err.textContent = "Indique ton type de pneus."; return; }
+    if (t === "book" && form.tyres.value === "Route") { err.textContent = "Des pneus mixtes ou à crampons sont obligatoires pour participer."; return; }
+    if (t === "book" && !(form.sabot.checked && form.crash.checked)) { err.textContent = "Le sabot moteur et les crash bars sont obligatoires pour participer."; return; }
+    if (t === "book" && !form.gear.checked) { err.textContent = "Confirme que tu viendras avec l'équipement pilote obligatoire."; return; }
     if (t !== "question" && !form.cgv.checked) { err.textContent = "Coche l'acceptation des conditions de vente."; return; }
 
     var rows = [["Demande", t === "book" ? (f === "perso" ? "Coaching perso" : "Réservation en groupe") : t === "gift" ? "Bon cadeau" : "Question"], ["Nom", first + " " + last], ["E-mail", email]];
     var amount = null;
     if (t === "book" && f === "group") { var so = selected(form.session); rows.push(["Stage", so ? so.textContent : ""]); amount = so && so.getAttribute("data-price"); }
     if (t === "book" && f === "perso") { var po = selected(form.perso); rows.push(["Formule", po.value], ["Date souhaitée", form.wish.value]); amount = po.getAttribute("data-price"); }
-    if (t === "book") rows.push(["Moto", form.bike.value], ["Expérience", form.exp.value]);
+    if (t === "book") {
+      rows.push(["Moto", /^Autre/.test(form.bike.value) ? form.bikeOther.value.trim() : form.bike.value], ["Pneus", form.tyres.value],
+        ["Protections", ["Sabot moteur", "Crash bars"].concat(form.hands.checked ? ["Protège-mains"] : []).join(", ")],
+        ["Expérience", form.exp.value], ["Droit à l'image", form.image.checked ? "Accepté" : "Refusé"]);
+    }
     if (t === "gift") { var go = selected(form.gift); rows.push(["Bon cadeau", go.value]); amount = go.getAttribute("data-price"); }
     if (amount) rows.push(["Montant", amount + " €"]);
 
